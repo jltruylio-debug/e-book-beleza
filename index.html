@@ -8,33 +8,35 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script>
 tailwind.config = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Inter', 'sans-serif'],
-                serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+                sans: ['Plus Jakarta Sans', 'sans-serif'],
+                serif: ['Playfair Display', 'Georgia', 'serif'],
             },
             colors: {
-                ivory: '#FAF7F2',
-                alabaster: '#F3EDE4',
-                charcoal: '#231F1E',
-                muted: '#635B57',
-                rosegold: {
-                    50: '#FDF8F6',
-                    100: '#F7EBE6',
-                    200: '#EAD2C8',
-                    500: '#B57B68',
-                    600: '#9A614F',
-                    700: '#7D4B3B',
-                },
+                ivory: '#FAF8F5',
+                alabaster: '#F2EDE4',
+                charcoal: '#1F2421',
+                muted: '#5C635E',
                 sage: {
-                    50: '#F4F7F4',
-                    100: '#E3EBE4',
-                    600: '#4E6E58',
-                    700: '#3B5644',
+                    50: '#F3F7F4',
+                    100: '#E2ECE5',
+                    200: '#C5D9CC',
+                    600: '#3D614D',
+                    700: '#2D4A3A',
+                    800: '#1F3529',
+                },
+                champagne: {
+                    50: '#FDFBF7',
+                    100: '#F7F0E2',
+                    200: '#EADBC0',
+                    500: '#B8924A',
+                    600: '#9A7634',
+                    700: '#7A5B22',
                 }
             }
         }
@@ -43,193 +45,194 @@ tailwind.config = {
 </script>
 <style>
     body {
-        background-color: #FAF7F2;
-        color: #231F1E;
+        background-color: #FAF8F5;
+        color: #1F2421;
         scroll-behavior: smooth;
     }
-    .tab-content {
+    .tab-panel {
         display: none;
-        animation: fadeSlide 0.28s ease-out;
+        animation: panelFade 0.25s ease-out;
     }
-    .tab-content.active {
+    .tab-panel.active {
         display: block;
     }
-    @keyframes fadeSlide {
-        from { opacity: 0; transform: translateY(8px); }
+    @keyframes panelFade {
+        from { opacity: 0; transform: translateY(6px); }
         to { opacity: 1; transform: translateY(0); }
     }
-    .ebook-font-sm { font-size: 0.95rem; line-height: 1.7; }
-    .ebook-font-md { font-size: 1.08rem; line-height: 1.8; }
-    .ebook-font-lg { font-size: 1.22rem; line-height: 1.9; }
+    .ebook-font-sm { font-size: 0.94rem; line-height: 1.72; }
+    .ebook-font-md { font-size: 1.06rem; line-height: 1.82; }
+    .ebook-font-lg { font-size: 1.2rem; line-height: 1.92; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     @media print {
-        header, .no-print, nav, footer { display: none !important; }
-        body { background: #fff !important; }
-        .tab-content { display: block !important; }
+        header, nav, footer, .no-print { display: none !important; }
+        body { background: #ffffff !important; }
+        .tab-panel { display: block !important; margin-bottom: 2rem; }
     }
 </style>
 </head>
-<body class="antialiased selection:bg-rosegold-200 selection:text-charcoal">
+<body class="antialiased selection:bg-champagne-200 selection:text-charcoal">
 
-    <!-- STICKY TOP HEADER & LANGUAGE SWITCHER -->
+    <!-- STICKY HEADER & REACTIVE LANGUAGE BAR -->
     <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-wrap items-center justify-between py-3 gap-3">
-                <!-- Brand -->
+            <div class="flex flex-wrap items-center justify-between py-3.5 gap-3">
+                <!-- Brand Identity -->
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-rosegold-700 text-white flex items-center justify-center font-serif text-xl font-bold shadow-sm">
+                    <div class="w-10 h-10 rounded-xl bg-sage-700 text-champagne-100 flex items-center justify-center font-serif text-xl font-bold shadow-sm border border-champagne-500/30">
                         AB
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
                             <span class="font-serif text-xl sm:text-2xl font-bold tracking-tight text-charcoal">Atelier Derma &amp; Beauté</span>
-                            <span id="ui-badge-edition" class="hidden sm:inline-block text-[11px] uppercase tracking-widest font-semibold px-2.5 py-0.5 rounded-full bg-alabaster text-rosegold-700 border border-rosegold-200">Enciclopédia Clínica</span>
+                            <span data-i18n="badgeEdition" class="hidden sm:inline-block text-[11px] uppercase tracking-widest font-semibold px-2.5 py-0.5 rounded-full bg-champagne-100 text-champagne-700 border border-champagne-200">Enciclopédia Clínica</span>
                         </div>
-                        <p id="ui-subtitle" class="text-xs text-muted">Cosmetologia Avançada, Tricologia &amp; Visagismo</p>
+                        <p data-i18n="subtitle" class="text-xs text-muted">Cosmetologia Avançada, Tricologia &amp; Visagismo</p>
                     </div>
                 </div>
 
-                <!-- Right Controls: Language Switcher + Print -->
-                <div class="flex items-center gap-2 sm:gap-3">
-                    <div class="flex items-center bg-alabaster p-1 rounded-xl border border-stone-200" role="group" aria-label="Language Selector">
-                        <button onclick="setLanguage('pt')" data-lang="pt" class="lang-btn px-2.5 py-1 text-xs font-bold rounded-lg transition bg-rosegold-700 text-white">PT</button>
-                        <button onclick="setLanguage('en')" data-lang="en" class="lang-btn px-2.5 py-1 text-xs font-bold rounded-lg transition text-muted hover:text-charcoal">EN</button>
-                        <button onclick="setLanguage('es')" data-lang="es" class="lang-btn px-2.5 py-1 text-xs font-bold rounded-lg transition text-muted hover:text-charcoal">ES</button>
-                        <button onclick="setLanguage('fr')" data-lang="fr" class="lang-btn px-2.5 py-1 text-xs font-bold rounded-lg transition text-muted hover:text-charcoal">FR</button>
+                <!-- Language Switcher (PT / EN / ES / FR) & Export -->
+                <div class="flex items-center gap-2.5">
+                    <div id="lang-switcher" class="flex items-center bg-alabaster p-1 rounded-xl border border-stone-200 shadow-inner" role="group" aria-label="Language Selector">
+                        <button type="button" data-lang="pt" class="lang-btn px-3 py-1.5 text-xs font-bold rounded-lg transition cursor-pointer bg-sage-700 text-white shadow-sm">PT</button>
+                        <button type="button" data-lang="en" class="lang-btn px-3 py-1.5 text-xs font-bold rounded-lg transition cursor-pointer text-muted hover:text-charcoal">EN</button>
+                        <button type="button" data-lang="es" class="lang-btn px-3 py-1.5 text-xs font-bold rounded-lg transition cursor-pointer text-muted hover:text-charcoal">ES</button>
+                        <button type="button" data-lang="fr" class="lang-btn px-3 py-1.5 text-xs font-bold rounded-lg transition cursor-pointer text-muted hover:text-charcoal">FR</button>
                     </div>
-                    <button onclick="window.print()" class="no-print px-3 py-1.5 rounded-xl border border-stone-300 bg-white hover:bg-alabaster text-xs font-semibold text-charcoal transition flex items-center gap-1.5" title="Print / PDF">
-                        <svg class="w-4 h-4 text-rosegold-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-                        <span id="ui-btn-print" class="hidden md:inline">Exportar PDF</span>
+
+                    <button type="button" onclick="window.print()" class="no-print px-3.5 py-2 rounded-xl border border-stone-300 bg-white hover:bg-alabaster text-xs font-semibold text-charcoal transition flex items-center gap-1.5 cursor-pointer">
+                        <svg class="w-4 h-4 text-sage-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                        <span data-i18n="btnPrint" class="hidden md:inline">Exportar PDF</span>
                     </button>
                 </div>
             </div>
 
-            <!-- 5-MODULE NAVIGATION BAR -->
-            <nav class="flex overflow-x-auto pb-2.5 pt-1 gap-1.5 no-scrollbar" aria-label="Main Modules">
-                <button onclick="switchModule('diagnostic')" data-mod="diagnostic" class="mod-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-rosegold-700 text-white shadow-sm">
-                    1. <span id="nav-mod-1">Diagnóstico &amp; Rotina</span>
+            <!-- 5-MODULE NAVIGATION -->
+            <nav id="module-nav" class="flex overflow-x-auto pb-3 pt-1 gap-1.5 no-scrollbar" aria-label="Main Modules">
+                <button type="button" data-mod="diagnostic" class="mod-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer bg-sage-700 text-white shadow-sm">
+                    1. <span data-i18n="nav1">Diagnóstico &amp; Rotina</span>
                 </button>
-                <button onclick="switchModule('ebook')" data-mod="ebook" class="mod-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition text-muted hover:bg-alabaster hover:text-charcoal">
-                    2. <span id="nav-mod-2">Tratado E-Book (6 Capítulos)</span>
+                <button type="button" data-mod="ebook" class="mod-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer text-muted hover:bg-alabaster hover:text-charcoal">
+                    2. <span data-i18n="nav2">Tratado E-Book (6 Capítulos)</span>
                 </button>
-                <button onclick="switchModule('actives')" data-mod="actives" class="mod-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition text-muted hover:bg-alabaster hover:text-charcoal">
-                    3. <span id="nav-mod-3">Ativos &amp; Compatibilidade</span>
+                <button type="button" data-mod="actives" class="mod-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer text-muted hover:bg-alabaster hover:text-charcoal">
+                    3. <span data-i18n="nav3">Ativos &amp; Compatibilidade</span>
                 </button>
-                <button onclick="switchModule('trichology')" data-mod="trichology" class="mod-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition text-muted hover:bg-alabaster hover:text-charcoal">
-                    4. <span id="nav-mod-4">Tricologia &amp; Cronograma</span>
+                <button type="button" data-mod="trichology" class="mod-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer text-muted hover:bg-alabaster hover:text-charcoal">
+                    4. <span data-i18n="nav4">Tricologia &amp; Cronograma</span>
                 </button>
-                <button onclick="switchModule('visagism')" data-mod="visagism" class="mod-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition text-muted hover:bg-alabaster hover:text-charcoal">
-                    5. <span id="nav-mod-5">Visagismo &amp; 12 Estações</span>
+                <button type="button" data-mod="visagism" class="mod-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer text-muted hover:bg-alabaster hover:text-charcoal">
+                    5. <span data-i18n="nav5">Visagismo &amp; 12 Estações</span>
                 </button>
             </nav>
         </div>
     </header>
 
-    <!-- HERO EDITORIAL STRIP -->
-    <section class="bg-gradient-to-r from-alabaster via-ivory to-rosegold-100 border-b border-stone-200 py-8 px-4 sm:px-6 lg:px-8">
+    <!-- HERO EDITORIAL BANNER -->
+    <section class="bg-gradient-to-br from-alabaster via-ivory to-champagne-100 border-b border-stone-200 py-8 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
             <div class="lg:col-span-8">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-rosegold-200 text-rosegold-700 text-xs font-semibold mb-3">
-                    <span class="w-2 h-2 rounded-full bg-sage-600"></span>
-                    <span id="hero-kicker">Plataforma Científica Multilíngue • PT / EN / ES / FR</span>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-champagne-200 text-champagne-700 text-xs font-semibold mb-3 shadow-2xs">
+                    <span class="w-2 h-2 rounded-full bg-sage-600 animate-pulse"></span>
+                    <span data-i18n="heroKicker">Plataforma Científica Multilíngue • PT / EN / ES / FR</span>
                 </div>
-                <h1 id="hero-title" class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal leading-tight mb-3">
+                <h1 data-i18n="heroTitle" class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal leading-tight mb-3">
                     Ciência da Pele, Tricologia Aplicada e Harmonia Estética
                 </h1>
-                <p id="hero-desc" class="text-sm sm:text-base text-muted max-w-3xl leading-relaxed">
+                <p data-i18n="heroDesc" class="text-sm sm:text-base text-muted max-w-3xl leading-relaxed">
                     Um compêndio digital interativo projetado com rigor dermatológico e cosmetológico. Diagnostique seu perfil cutâneo e capilar, estude os 6 capítulos completos do tratado, verifique sinergias químicas entre 16 ativos e descubra sua cartela cromática.
                 </p>
             </div>
             <div class="lg:col-span-4 grid grid-cols-2 gap-3">
                 <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm">
-                    <div class="font-serif text-2xl font-bold text-rosegold-700">6 Capítulos</div>
-                    <div id="stat-1" class="text-xs text-muted mt-0.5">Tratado completo com marcadores</div>
+                    <div data-i18n="statNum1" class="font-serif text-2xl font-bold text-sage-700">6 Capítulos</div>
+                    <div data-i18n="stat1" class="text-xs text-muted mt-0.5">Tratado completo com marcadores</div>
                 </div>
                 <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm">
-                    <div class="font-serif text-2xl font-bold text-sage-700">16 Ativos</div>
-                    <div id="stat-2" class="text-xs text-muted mt-0.5">Matriz química de pH e sinergia</div>
+                    <div data-i18n="statNum2" class="font-serif text-2xl font-bold text-champagne-700">16 Ativos</div>
+                    <div data-i18n="stat2" class="text-xs text-muted mt-0.5">Matriz química de pH e sinergia</div>
                 </div>
                 <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm">
-                    <div class="font-serif text-2xl font-bold text-rosegold-700">Fitzpatrick I–VI</div>
-                    <div id="stat-3" class="text-xs text-muted mt-0.5">Fotoproteção &amp; melanogênese</div>
+                    <div class="font-serif text-2xl font-bold text-sage-700">Fitzpatrick I–VI</div>
+                    <div data-i18n="stat3" class="text-xs text-muted mt-0.5">Fotoproteção &amp; melanogênese</div>
                 </div>
                 <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm">
-                    <div class="font-serif text-2xl font-bold text-sage-700">12 Estações</div>
-                    <div id="stat-4" class="text-xs text-muted mt-0.5">Colorimetria &amp; visagismo facial</div>
+                    <div data-i18n="statNum4" class="font-serif text-2xl font-bold text-champagne-700">12 Estações</div>
+                    <div data-i18n="stat4" class="text-xs text-muted mt-0.5">Colorimetria &amp; visagismo facial</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- MAIN CONTAINER -->
+    <!-- MAIN WORKSPACE -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         <!-- ========================================================= -->
         <!-- MODULE 1: DIAGNOSTIC ENGINE & PROTOCOL GENERATOR          -->
         <!-- ========================================================= -->
-        <section id="mod-diagnostic" class="tab-content active">
+        <section id="panel-diagnostic" class="tab-panel active">
             <div class="mb-6">
-                <span class="text-xs uppercase tracking-widest font-bold text-rosegold-600" id="m1-breadcrumb">Módulo 01 • Consultoria Clínica</span>
-                <h2 id="m1-title" class="font-serif text-3xl font-bold text-charcoal mt-1">Motor de Diagnóstico Cutâneo &amp; Capilar</h2>
-                <p id="m1-subtitle" class="text-sm text-muted mt-1">Preencha os 5 parâmetros clínicos abaixo para gerar uma prescrição cosmetológica detalhada com ordem de aplicação, faixa de pH e tempo de pausa.</p>
+                <span data-i18n="m1Breadcrumb" class="text-xs uppercase tracking-widest font-bold text-champagne-700">Módulo 01 • Consultoria Clínica</span>
+                <h2 data-i18n="m1Title" class="font-serif text-3xl font-bold text-charcoal mt-1">Motor de Diagnóstico Cutâneo &amp; Capilar</h2>
+                <p data-i18n="m1Subtitle" class="text-sm text-muted mt-1">Selecione os 5 parâmetros clínicos abaixo para gerar uma prescrição cosmetológica detalhada com ordem de aplicação, faixa de pH e tempo de pausa.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- Wizard Controls -->
+                <!-- Clinical Parameters Form -->
                 <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-5">
                     <div>
-                        <label id="lbl-skin-type" class="block text-xs font-bold uppercase tracking-wider text-charcoal mb-2">1. Biotipo Cutâneo (Atividade Sebácea)</label>
-                        <select id="diag-skin" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium focus:outline-none focus:border-rosegold-600"></select>
+                        <label for="diag-skin" data-i18n="lblSkinType" class="block text-xs font-bold uppercase tracking-wider text-charcoal mb-2">1. Biotipo Cutâneo (Atividade Sebácea)</label>
+                        <select id="diag-skin" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium focus:outline-none focus:border-sage-600"></select>
                     </div>
 
                     <div>
-                        <label id="lbl-fitzpatrick" class="block text-xs font-bold uppercase tracking-wider text-charcoal mb-2">2. Escala de Fitzpatrick (Fototipo I a VI)</label>
-                        <select id="diag-fitz" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium focus:outline-none focus:border-rosegold-600"></select>
+                        <label for="diag-fitz" data-i18n="lblFitzpatrick" class="block text-xs font-bold uppercase tracking-wider text-charcoal mb-2">2. Escala de Fitzpatrick (Fototipo I a VI)</label>
+                        <select id="diag-fitz" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium focus:outline-none focus:border-sage-600"></select>
                     </div>
 
                     <div>
-                        <label id="lbl-concern" class="block text-xs font-bold uppercase tracking-wider text-charcoal mb-2">3. Queixa Dermatológica Prioritária</label>
-                        <select id="diag-concern" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium focus:outline-none focus:border-rosegold-600"></select>
+                        <label for="diag-concern" data-i18n="lblConcern" class="block text-xs font-bold uppercase tracking-wider text-charcoal mb-2">3. Queixa Dermatológica Prioritária</label>
+                        <select id="diag-concern" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium focus:outline-none focus:border-sage-600"></select>
                     </div>
 
                     <div>
-                        <label id="lbl-sensitivity" class="block text-xs font-bold uppercase tracking-wider text-charcoal mb-2">4. Reatividade da Barreira Epidérmica</label>
-                        <select id="diag-sens" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium focus:outline-none focus:border-rosegold-600"></select>
+                        <label for="diag-sens" data-i18n="lblSensitivity" class="block text-xs font-bold uppercase tracking-wider text-charcoal mb-2">4. Reatividade da Barreira Epidérmica</label>
+                        <select id="diag-sens" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium focus:outline-none focus:border-sage-600"></select>
                     </div>
 
                     <div>
-                        <label id="lbl-porosity" class="block text-xs font-bold uppercase tracking-wider text-charcoal mb-2">5. Porosidade da Haste Capilar</label>
-                        <select id="diag-porosity" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium focus:outline-none focus:border-rosegold-600"></select>
+                        <label for="diag-porosity" data-i18n="lblPorosity" class="block text-xs font-bold uppercase tracking-wider text-charcoal mb-2">5. Porosidade da Haste Capilar</label>
+                        <select id="diag-porosity" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium focus:outline-none focus:border-sage-600"></select>
                     </div>
 
-                    <button onclick="runDiagnostic()" id="btn-generate-protocol" class="w-full py-3.5 px-6 rounded-xl bg-rosegold-700 hover:bg-rosegold-600 text-white font-semibold text-sm shadow-md transition">
+                    <button type="button" id="btn-generate-protocol" data-i18n="btnGenerateProtocol" class="w-full py-3.5 px-6 rounded-xl bg-sage-700 hover:bg-sage-600 text-white font-semibold text-sm shadow-md transition cursor-pointer">
                         Gerar Protocolo Clínico Completo
                     </button>
                 </div>
 
-                <!-- Generated Prescription Output -->
-                <div class="lg:col-span-7 space-y-6" id="diagnostic-result-container">
-                    <!-- Populated dynamically by JS -->
-                </div>
+                <!-- Dynamic Prescription Output -->
+                <div class="lg:col-span-7 space-y-6" id="diagnostic-result-container"></div>
             </div>
         </section>
 
         <!-- ========================================================= -->
         <!-- MODULE 2: COMPLETE INTERACTIVE E-BOOK READER              -->
         <!-- ========================================================= -->
-        <section id="mod-ebook" class="tab-content">
+        <section id="panel-ebook" class="tab-panel">
             <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
                 <div>
-                    <span class="text-xs uppercase tracking-widest font-bold text-rosegold-600" id="m2-breadcrumb">Módulo 02 • Obra Completa</span>
-                    <h2 id="m2-title" class="font-serif text-3xl font-bold text-charcoal mt-1">Tratado Digital de Beleza Integral</h2>
+                    <span data-i18n="m2Breadcrumb" class="text-xs uppercase tracking-widest font-bold text-champagne-700">Módulo 02 • Obra Completa</span>
+                    <h2 data-i18n="m2Title" class="font-serif text-3xl font-bold text-charcoal mt-1">Tratado Digital de Beleza Integral</h2>
                 </div>
                 <!-- Reader Controls -->
                 <div class="flex items-center gap-2 bg-white p-1.5 rounded-xl border border-stone-200 shadow-sm">
-                    <span id="lbl-font-size" class="text-xs font-semibold text-muted px-2">Texto:</span>
-                    <button onclick="setEbookFont('sm')" class="px-2.5 py-1 rounded-lg text-xs font-bold hover:bg-alabaster">A-</button>
-                    <button onclick="setEbookFont('md')" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-alabaster text-rosegold-700">A</button>
-                    <button onclick="setEbookFont('lg')" class="px-2.5 py-1 rounded-lg text-xs font-bold hover:bg-alabaster">A+</button>
+                    <span data-i18n="lblFontSize" class="text-xs font-semibold text-muted px-2">Texto:</span>
+                    <button type="button" data-font="sm" class="font-btn px-2.5 py-1 rounded-lg text-xs font-bold hover:bg-alabaster cursor-pointer">A-</button>
+                    <button type="button" data-font="md" class="font-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-alabaster text-sage-700 cursor-pointer">A</button>
+                    <button type="button" data-font="lg" class="font-btn px-2.5 py-1 rounded-lg text-xs font-bold hover:bg-alabaster cursor-pointer">A+</button>
                     <div class="h-4 w-px bg-stone-200 mx-1"></div>
-                    <button onclick="toggleBookmark()" id="btn-bookmark" class="px-3 py-1 rounded-lg text-xs font-semibold bg-rosegold-50 text-rosegold-700 border border-rosegold-200 hover:bg-rosegold-100 transition">
+                    <button type="button" id="btn-bookmark" class="px-3 py-1 rounded-lg text-xs font-semibold bg-champagne-50 text-champagne-700 border border-champagne-200 hover:bg-champagne-100 transition cursor-pointer">
                         ★ <span id="lbl-bookmark">Salvar Capítulo</span>
                     </button>
                 </div>
@@ -237,20 +240,18 @@ tailwind.config = {
 
             <!-- Reading Progress Bar -->
             <div class="w-full h-2 bg-stone-200 rounded-full overflow-hidden mb-6">
-                <div id="ebook-progress-bar" class="h-full bg-rosegold-600 transition-all duration-300" style="width: 16.6%;"></div>
+                <div id="ebook-progress-bar" class="h-full bg-sage-600 transition-all duration-300" style="width: 16.6%;"></div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- Sidebar TOC -->
                 <aside class="lg:col-span-4 space-y-2" id="ebook-toc"></aside>
 
-                <!-- Chapter Article Area -->
                 <article class="lg:col-span-8 bg-white p-6 sm:p-10 rounded-2xl border border-stone-200 shadow-sm">
                     <div id="ebook-chapter-view" class="ebook-font-md text-charcoal space-y-5"></div>
                     <div class="mt-8 pt-6 border-t border-stone-200 flex items-center justify-between">
-                        <button onclick="prevChapter()" id="btn-prev-chap" class="px-4 py-2 rounded-xl border border-stone-300 text-xs font-semibold hover:bg-alabaster transition">← Anterior</button>
+                        <button type="button" id="btn-prev-chap" data-i18n="btnPrev" class="px-4 py-2 rounded-xl border border-stone-300 text-xs font-semibold hover:bg-alabaster transition cursor-pointer">← Capítulo Anterior</button>
                         <span id="ebook-page-indicator" class="text-xs font-semibold text-muted">1 / 6</span>
-                        <button onclick="nextChapter()" id="btn-next-chap" class="px-4 py-2 rounded-xl bg-rosegold-700 text-white text-xs font-semibold hover:bg-rosegold-600 transition">Próximo →</button>
+                        <button type="button" id="btn-next-chap" data-i18n="btnNext" class="px-4 py-2 rounded-xl bg-sage-700 text-white text-xs font-semibold hover:bg-sage-600 transition cursor-pointer">Próximo Capítulo →</button>
                     </div>
                 </article>
             </div>
@@ -259,25 +260,25 @@ tailwind.config = {
         <!-- ========================================================= -->
         <!-- MODULE 3: ACTIVES ENCYCLOPEDIA & COMPATIBILITY MATRIX     -->
         <!-- ========================================================= -->
-        <section id="mod-actives" class="tab-content">
+        <section id="panel-actives" class="tab-panel">
             <div class="mb-6">
-                <span class="text-xs uppercase tracking-widest font-bold text-rosegold-600" id="m3-breadcrumb">Módulo 03 • Farmacotécnica &amp; Química</span>
-                <h2 id="m3-title" class="font-serif text-3xl font-bold text-charcoal mt-1">Enciclopédia de 16 Ativos &amp; Matriz de Compatibilidade</h2>
-                <p id="m3-subtitle" class="text-sm text-muted mt-1">Verifique a segurança de combinação entre dois ingredientes ativos e explore suas concentrações clínicas e faixas de pH.</p>
+                <span data-i18n="m3Breadcrumb" class="text-xs uppercase tracking-widest font-bold text-champagne-700">Módulo 03 • Farmacotécnica &amp; Química</span>
+                <h2 data-i18n="m3Title" class="font-serif text-3xl font-bold text-charcoal mt-1">Enciclopédia de 16 Ativos &amp; Matriz de Compatibilidade</h2>
+                <p data-i18n="m3Subtitle" class="text-sm text-muted mt-1">Verifique a segurança de combinação entre dois ingredientes ativos e explore suas concentrações clínicas e faixas de pH.</p>
             </div>
 
             <!-- Interactive Pairing Checker -->
             <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm mb-8">
-                <h3 id="checker-title" class="font-serif text-xl font-bold text-charcoal mb-4">Verificador Interativo de Combinação Química</h3>
+                <h3 data-i18n="checkerTitle" class="font-serif text-xl font-bold text-charcoal mb-4">Verificador Interativo de Combinação Química</h3>
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
                     <div class="md:col-span-5">
-                        <label id="lbl-act-a" class="block text-xs font-bold uppercase text-muted mb-1.5">Ativo A (Primeiro Produto)</label>
-                        <select id="pair-select-a" onchange="checkCompatibility()" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium"></select>
+                        <label for="pair-select-a" data-i18n="lblActA" class="block text-xs font-bold uppercase text-muted mb-1.5">Ativo A (Primeiro Produto)</label>
+                        <select id="pair-select-a" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium"></select>
                     </div>
-                    <div class="md:col-span-2 text-center font-serif text-2xl font-bold text-rosegold-600 pb-2">+</div>
+                    <div class="md:col-span-2 text-center font-serif text-2xl font-bold text-champagne-600 pb-2">+</div>
                     <div class="md:col-span-5">
-                        <label id="lbl-act-b" class="block text-xs font-bold uppercase text-muted mb-1.5">Ativo B (Segundo Produto)</label>
-                        <select id="pair-select-b" onchange="checkCompatibility()" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium"></select>
+                        <label for="pair-select-b" data-i18n="lblActB" class="block text-xs font-bold uppercase text-muted mb-1.5">Ativo B (Segundo Produto)</label>
+                        <select id="pair-select-b" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium"></select>
                     </div>
                 </div>
                 <div id="compatibility-result" class="mt-5 p-4 rounded-xl border"></div>
@@ -285,13 +286,13 @@ tailwind.config = {
 
             <!-- Filter & Search -->
             <div class="flex flex-col sm:flex-row gap-3 mb-6">
-                <input type="text" id="actives-search" oninput="renderActivesGrid()" class="flex-1 p-3 rounded-xl bg-white border border-stone-300 text-sm" placeholder="Buscar ativo...">
-                <select id="actives-filter" onchange="renderActivesGrid()" class="p-3 rounded-xl bg-white border border-stone-300 text-sm font-medium">
-                    <option value="all" id="opt-cat-all">Todas as Classes</option>
-                    <option value="retinoid" id="opt-cat-ret">Retinoides &amp; Análogos</option>
-                    <option value="acid" id="opt-cat-acid">Ácidos Esfoliantes &amp; Despigmentantes</option>
-                    <option value="antioxidant" id="opt-cat-anti">Antioxidantes &amp; Vasoprotetores</option>
-                    <option value="barrier" id="opt-cat-bar">Reparo de Barreira &amp; Peptídeos</option>
+                <input type="text" id="actives-search" data-i18n-placeholder="searchPlaceholder" class="flex-1 p-3 rounded-xl bg-white border border-stone-300 text-sm" placeholder="Buscar ativo por nome, mecanismo ou indicação...">
+                <select id="actives-filter" class="p-3 rounded-xl bg-white border border-stone-300 text-sm font-medium">
+                    <option value="all" data-i18n="catAll">Todas as Classes (16 Ativos)</option>
+                    <option value="retinoid" data-i18n="catRet">Retinoides &amp; Análogos</option>
+                    <option value="acid" data-i18n="catAcid">Ácidos Esfoliantes &amp; Despigmentantes</option>
+                    <option value="antioxidant" data-i18n="catAnti">Antioxidantes &amp; Vasoprotetores</option>
+                    <option value="barrier" data-i18n="catBar">Reparo de Barreira &amp; Peptídeos</option>
                 </select>
             </div>
 
@@ -301,35 +302,33 @@ tailwind.config = {
         <!-- ========================================================= -->
         <!-- MODULE 4: TRICHOLOGY & 4-WEEK HAIR CALENDAR               -->
         <!-- ========================================================= -->
-        <section id="mod-trichology" class="tab-content">
+        <section id="panel-trichology" class="tab-panel">
             <div class="mb-6">
-                <span class="text-xs uppercase tracking-widest font-bold text-rosegold-600" id="m4-breadcrumb">Módulo 04 • Terapia Capilar</span>
-                <h2 id="m4-title" class="font-serif text-3xl font-bold text-charcoal mt-1">Tricologia &amp; Gerador de Cronograma Capilar (4 Semanas)</h2>
-                <p id="m4-subtitle" class="text-sm text-muted mt-1">Avalie a porosidade cuticular e gere um calendário de 12 tratamentos equilibrando Hidratação, Nutrição Lipídica e Reconstrução Proteica.</p>
+                <span data-i18n="m4Breadcrumb" class="text-xs uppercase tracking-widest font-bold text-champagne-700">Módulo 04 • Terapia Capilar</span>
+                <h2 data-i18n="m4Title" class="font-serif text-3xl font-bold text-charcoal mt-1">Tricologia &amp; Gerador de Cronograma Capilar (4 Semanas)</h2>
+                <p data-i18n="m4Subtitle" class="text-sm text-muted mt-1">Avalie a porosidade cuticular e gere um calendário de 12 tratamentos equilibrando Hidratação, Nutrição Lipídica e Reconstrução Proteica.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- Porosity Guide & Controls -->
                 <div class="lg:col-span-4 space-y-5">
                     <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4">
-                        <h3 id="hair-form-title" class="font-serif text-xl font-bold text-charcoal">Configurar Terapia Capilar</h3>
+                        <h3 data-i18n="hairFormTitle" class="font-serif text-xl font-bold text-charcoal">Configurar Terapia Capilar</h3>
                         <div>
-                            <label id="lbl-hair-state" class="block text-xs font-bold uppercase text-muted mb-1.5">Nível de Porosidade / Dano</label>
-                            <select id="hair-porosity-select" onchange="generateHairCalendar()" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium"></select>
+                            <label for="hair-porosity-select" data-i18n="lblHairState" class="block text-xs font-bold uppercase text-muted mb-1.5">Nível de Porosidade / Dano da Haste</label>
+                            <select id="hair-porosity-select" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium"></select>
                         </div>
                         <div>
-                            <label id="lbl-scalp-type" class="block text-xs font-bold uppercase text-muted mb-1.5">Condição do Couro Cabeludo</label>
-                            <select id="hair-scalp-select" onchange="generateHairCalendar()" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium"></select>
+                            <label for="hair-scalp-select" data-i18n="lblScalpType" class="block text-xs font-bold uppercase text-muted mb-1.5">Condição do Couro Cabeludo</label>
+                            <select id="hair-scalp-select" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium"></select>
                         </div>
                     </div>
 
                     <div class="bg-alabaster p-5 rounded-2xl border border-stone-200 space-y-3">
-                        <h4 id="porosity-test-title" class="font-serif text-lg font-bold text-rosegold-700">Teste Clínico de Absorção e Tato</h4>
-                        <p id="porosity-test-desc" class="text-xs text-charcoal leading-relaxed"></p>
+                        <h4 data-i18n="porosityTestTitle" class="font-serif text-lg font-bold text-sage-700">Teste Clínico de Absorção e Tato</h4>
+                        <p data-i18n="porosityTestDesc" class="text-xs text-charcoal leading-relaxed"></p>
                     </div>
                 </div>
 
-                <!-- 4-Week Calendar Output -->
                 <div class="lg:col-span-8 space-y-6" id="hair-calendar-output"></div>
             </div>
         </section>
@@ -337,1019 +336,946 @@ tailwind.config = {
         <!-- ========================================================= -->
         <!-- MODULE 5: VISAGISM & 12-SEASON COLORIMETRY STUDIO         -->
         <!-- ========================================================= -->
-        <section id="mod-visagism" class="tab-content">
+        <section id="panel-visagism" class="tab-panel">
             <div class="mb-6">
-                <span class="text-xs uppercase tracking-widest font-bold text-rosegold-600" id="m5-breadcrumb">Módulo 05 • Harmonia &amp; Óptica</span>
-                <h2 id="m5-title" class="font-serif text-3xl font-bold text-charcoal mt-1">Estúdio de Visagismo &amp; Colorimetria das 12 Estações</h2>
-                <p id="m5-subtitle" class="text-sm text-muted mt-1">Combine temperatura (subtom), intensidade (croma) e profundidade (valor) para identificar sua estação cromática e geometria facial.</p>
+                <span data-i18n="m5Breadcrumb" class="text-xs uppercase tracking-widest font-bold text-champagne-700">Módulo 05 • Harmonia &amp; Óptica</span>
+                <h2 data-i18n="m5Title" class="font-serif text-3xl font-bold text-charcoal mt-1">Estúdio de Visagismo &amp; Colorimetria das 12 Estações</h2>
+                <p data-i18n="m5Subtitle" class="text-sm text-muted mt-1">Combine temperatura (subtom), intensidade (croma) e profundidade (valor) para identificar sua estação cromática e geometria facial.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- Analyzer Controls -->
                 <div class="lg:col-span-4 bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4">
-                    <h3 id="vis-form-title" class="font-serif text-xl font-bold text-charcoal">Analisador de Estação &amp; Rosto</h3>
+                    <h3 data-i18n="visFormTitle" class="font-serif text-xl font-bold text-charcoal">Analisador de Estação &amp; Rosto</h3>
                     <div>
-                        <label id="lbl-undertone" class="block text-xs font-bold uppercase text-muted mb-1.5">1. Temperatura / Subtom da Pele</label>
-                        <select id="vis-undertone" onchange="analyzeVisagism()" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium"></select>
+                        <label for="vis-undertone" data-i18n="lblUndertone" class="block text-xs font-bold uppercase text-muted mb-1.5">1. Temperatura / Subtom da Pele</label>
+                        <select id="vis-undertone" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium"></select>
                     </div>
                     <div>
-                        <label id="lbl-contrast" class="block text-xs font-bold uppercase text-muted mb-1.5">2. Contraste Pessoal (Pele x Cabelo x Olhos)</label>
-                        <select id="vis-contrast" onchange="analyzeVisagism()" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium"></select>
+                        <label for="vis-contrast" data-i18n="lblContrast" class="block text-xs font-bold uppercase text-muted mb-1.5">2. Contraste Pessoal (Pele x Cabelo x Olhos)</label>
+                        <select id="vis-contrast" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium"></select>
                     </div>
                     <div>
-                        <label id="lbl-faceshape" class="block text-xs font-bold uppercase text-muted mb-1.5">3. Geometria Facial Predominante</label>
-                        <select id="vis-faceshape" onchange="analyzeVisagism()" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium"></select>
+                        <label for="vis-faceshape" data-i18n="lblFaceshape" class="block text-xs font-bold uppercase text-muted mb-1.5">3. Geometria Facial Predominante</label>
+                        <select id="vis-faceshape" class="w-full p-3 rounded-xl bg-ivory border border-stone-300 text-sm font-medium"></select>
                     </div>
                 </div>
 
-                <!-- Colorimetry & Visagism Result -->
                 <div class="lg:col-span-8 space-y-6" id="visagism-output"></div>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-charcoal text-stone-300 py-10 px-4 sm:px-6 lg:px-8 mt-16 border-t border-stone-800">
+    <footer class="bg-sage-800 text-stone-300 py-10 px-4 sm:px-6 lg:px-8 mt-16 border-t border-sage-700">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
             <div>
                 <div class="font-serif text-xl font-bold text-white">Atelier Derma &amp; Beauté</div>
-                <p id="footer-disclaimer" class="text-xs text-stone-400 mt-1 max-w-2xl">
+                <p data-i18n="footerDisclaimer" class="text-xs text-stone-300/80 mt-1 max-w-2xl">
                     Plataforma educacional de cosmetologia, tricologia e visagismo. As informações técnicas não substituem consulta médica dermatológica individualizada.
                 </p>
             </div>
-            <div class="text-xs text-stone-400">
-                PT • EN • ES • FR — <span id="footer-edition">Edição Internacional</span>
+            <div class="text-xs text-champagne-200 font-semibold">
+                PT • EN • ES • FR — <span data-i18n="footerEdition">Edição Internacional</span>
             </div>
         </div>
     </footer>
 
 <script>
-// ============================================================================
-// COMPREHENSIVE I18N DICTIONARY (PT, EN, ES, FR)
-// ============================================================================
-const I18N = {
-    pt: {
-        badgeEdition: "Enciclopédia Clínica",
-        subtitle: "Cosmetologia Avançada, Tricologia & Visagismo",
-        btnPrint: "Exportar PDF",
-        nav1: "Diagnóstico & Rotina",
-        nav2: "Tratado E-Book (6 Capítulos)",
-        nav3: "Ativos & Compatibilidade",
-        nav4: "Tricologia & Cronograma",
-        nav5: "Visagismo & 12 Estações",
-        heroKicker: "Plataforma Científica Multilíngue • PT / EN / ES / FR",
-        heroTitle: "Ciência da Pele, Tricologia Aplicada e Harmonia Estética",
-        heroDesc: "Um compêndio digital interativo projetado com rigor dermatológico e cosmetológico. Diagnostique seu perfil cutâneo e capilar, estude os 6 capítulos completos do tratado, verifique sinergias químicas entre 16 ativos e descubra sua cartela cromática.",
-        stat1: "Tratado completo com marcadores",
-        stat2: "Matriz química de pH e sinergia",
-        stat3: "Fotoproteção & melanogênese",
-        stat4: "Colorimetria & visagismo facial",
-        // Module 1
-        m1Breadcrumb: "Módulo 01 • Consultoria Clínica",
-        m1Title: "Motor de Diagnóstico Cutâneo & Capilar",
-        m1Subtitle: "Preencha os 5 parâmetros clínicos abaixo para gerar uma prescrição cosmetológica detalhada com ordem de aplicação, faixa de pH e tempo de pausa.",
-        lblSkinType: "1. Biotipo Cutâneo (Atividade Sebácea)",
-        lblFitzpatrick: "2. Escala de Fitzpatrick (Fototipo I a VI)",
-        lblConcern: "3. Queixa Dermatológica Prioritária",
-        lblSensitivity: "4. Reatividade da Barreira Epidérmica",
-        lblPorosity: "5. Porosidade da Haste Capilar",
-        btnGenerateProtocol: "Gerar Protocolo Clínico Completo",
-        skinOptions: [
-            { val: "oily", label: "Pele Lipídica (Oleosa — brilho difuso e óstios dilatados)" },
-            { val: "combo", label: "Pele Mista (Zona T oleosa e região malar normal/seca)" },
-            { val: "dry", label: "Pele Alípica (Seca — déficit lipídico e repuxamento)" },
-            { val: "normal", label: "Pele Eudérmica (Normal — equilíbrio hidrolipídico)" }
-        ],
-        fitzOptions: [
-            { val: "I-II", label: "Fototipos I–II (Pele muito clara, sempre queima, nunca bronzeia)" },
-            { val: "III-IV", label: "Fototipos III–IV (Pele morena clara a moderada, bronzeia gradualmente)" },
-            { val: "V-VI", label: "Fototipos V–VI (Pele morena escura a retinta, alta melanina e risco de HPI)" }
-        ],
-        concernOptions: [
-            { val: "acne", label: "Acne Comedogênica / Inflamatória e Poros Obstruídos" },
-            { val: "melasma", label: "Melasma, Lentigos Solares e Hiperpigmentação Pós-Inflamatória" },
-            { val: "aging", label: "Fotoenvelhecimento, Perda de Firmeza e Rugas Finas" },
-            { val: "barrier", label: "Desidratação Profunda, Rosácea Leve ou Barreira Danificada" }
-        ],
-        sensOptions: [
-            { val: "low", label: "Baixa Sensibilidade (Tolerante a ácidos e retinoides)" },
-            { val: "high", label: "Alta Sensibilidade (Rubor fácil, ardor ou pele iniciante)" }
-        ],
-        porosityOptions: [
-            { val: "low", label: "Porosidade Baixa (Cutículas muito fechadas, repele água)" },
-            { val: "medium", label: "Porosidade Média (Cutículas íntegras, brilho equilibrado)" },
-            { val: "high", label: "Porosidade Alta (Cutículas abertas por química/calor, frizz)" }
-        ],
-        morningTitle: "Protocolo Diurno (Defesa Antioxidante & Fotoproteção)",
-        eveningTitle: "Protocolo Noturno (Renovação Celular & Reparo Lamelar)",
-        hairSummaryTitle: "Conduta Tricológica Integrada",
-        phNoteLabel: "Nota Farmacotécnica & Tempo de Pausa:",
-        // Module 2
-        m2Breadcrumb: "Módulo 02 • Obra Completa",
-        m2Title: "Tratado Digital de Beleza Integral",
-        lblFontSize: "Texto:",
-        lblBookmark: "Salvar Capítulo",
-        lblBookmarked: "Capítulo Salvo",
-        btnPrev: "← Capítulo Anterior",
-        btnNext: "Próximo Capítulo →",
-        // Module 3
-        m3Breadcrumb: "Módulo 03 • Farmacotécnica & Química",
-        m3Title: "Enciclopédia de 16 Ativos & Matriz de Compatibilidade",
-        m3Subtitle: "Verifique a segurança de combinação entre dois ingredientes ativos e explore suas concentrações clínicas e faixas de pH.",
-        checkerTitle: "Verificador Interativo de Combinação Química",
-        lblActA: "Ativo A (Primeiro Produto)",
-        lblActB: "Ativo B (Segundo Produto)",
-        searchPlaceholder: "Buscar ativo por nome, mecanismo ou indicação...",
-        catAll: "Todas as Classes (16 Ativos)",
-        catRet: "Retinoides & Análogos",
-        catAcid: "Ácidos Esfoliantes & Despigmentantes",
-        catAnti: "Antioxidantes & Vasoprotetores",
-        catBar: "Reparo de Barreira & Peptídeos",
-        phRange: "pH Ótimo",
-        concRange: "Concentração Usual",
-        statusSafe: "COMBINAÇÃO SINÉRGICA E SEGURA",
-        statusCaution: "USO COM CAUTELA / ALTERNAR HORÁRIOS",
-        statusConflict: "CONFLITO QUÍMICO / ALTO RISCO DE IRRITAÇÃO",
-        // Module 4
-        m4Breadcrumb: "Módulo 04 • Terapia Capilar",
-        m4Title: "Tricologia & Gerador de Cronograma Capilar (4 Semanas)",
-        m4Subtitle: "Avalie a porosidade cuticular e gere um calendário de 12 tratamentos equilibrando Hidratação, Nutrição Lipídica e Reconstrução Proteica.",
-        hairFormTitle: "Configurar Terapia Capilar",
-        lblHairState: "Nível de Porosidade / Dano da Haste",
-        lblScalpType: "Condição do Couro Cabeludo",
-        porosityTestTitle: "Teste Clínico de Absorção e Tato",
-        porosityTestDesc: "Deslize os dedos de baixo para cima em um fio limpo e seco: superfície lisa indica porosidade baixa; leve resistência indica porosidade média; aspereza e nós indicam porosidade alta (cutículas levantadas). A acidificação (pH 3,5–4,5) sela as ligações salinas.",
-        scalpOptions: [
-            { val: "balanced", label: "Couro Cabeludo Equilibrado / Normal" },
-            { val: "oily", label: "Couro Cabeludo Oleoso / Tendência Seborreica" },
-            { val: "dry", label: "Couro Cabeludo Seco / Sensível" }
-        ],
-        // Module 5
-        m5Breadcrumb: "Módulo 05 • Harmonia & Óptica",
-        m5Title: "Estúdio de Visagismo & Colorimetria das 12 Estações",
-        m5Subtitle: "Combine temperatura (subtom), intensidade (croma) e profundidade (valor) para identificar sua estação cromática e geometria facial.",
-        visFormTitle: "Analisador de Estação & Rosto",
-        lblUndertone: "1. Temperatura / Subtom da Pele",
-        lblContrast: "2. Contraste Pessoal (Pele x Cabelo x Olhos)",
-        lblFaceshape: "3. Geometria Facial Predominante",
-        undertoneOptions: [
-            { val: "warm", label: "Quente (Pigmentos dourados, pêssego, veias esverdeadas)" },
-            { val: "cool", label: "Frio (Pigmentos rosados, azulados, veias arroxeadas)" },
-            { val: "neutral_warm", label: "Neutro-Quente / Oliva Dourado" },
-            { val: "neutral_cool", label: "Neutro-Frio / Oliva Acinzentado" }
-        ],
-        contrastOptions: [
-            { val: "high", label: "Alto Contraste (Pele clara com cabelos muito escuros ou pele retinta com olhos/sorriso brilhantes)" },
-            { val: "medium", label: "Médio Contraste (Transição harmônica entre pele, sobrancelhas e cabelos)" },
-            { val: "low", label: "Baixo Contraste / Suave (Tons próximos entre pele, olhos e cabelos)" }
-        ],
-        faceOptions: [
-            { val: "oval", label: "Oval (Proporções áureas equilibradas)" },
-            { val: "round", label: "Redondo (Ângulos suaves, largura e altura similares)" },
-            { val: "square", label: "Quadrado (Mandíbula e fronte angulosas)" },
-            { val: "heart", label: "Triangular Invertido / Coração (Fronte ampla, mento afilado)" },
-            { val: "oblong", label: "Alongado / Retangular (Eixo vertical predominante)" }
-        ],
-        footerDisclaimer: "Plataforma educacional de cosmetologia, tricologia e visagismo. As informações técnicas não substituem consulta médica dermatológica individualizada.",
-        footerEdition: "Edição Internacional"
-    },
-    en: {
-        badgeEdition: "Clinical Encyclopedia",
-        subtitle: "Advanced Cosmetology, Trichology & Visagism",
-        btnPrint: "Export PDF",
-        nav1: "Diagnostics & Routine",
-        nav2: "E-Book Treatise (6 Chapters)",
-        nav3: "Actives & Compatibility",
-        nav4: "Trichology & Calendar",
-        nav5: "Visagism & 12 Seasons",
-        heroKicker: "Multilingual Scientific Platform • PT / EN / ES / FR",
-        heroTitle: "Skin Science, Applied Trichology & Aesthetic Harmony",
-        heroDesc: "An interactive digital compendium engineered with dermatological and cosmetic chemistry rigor. Diagnose your skin and hair profile, study all 6 treatise chapters, verify chemical synergies across 16 actives, and discover your seasonal palette.",
-        stat1: "Complete treatise with bookmarks",
-        stat2: "Chemical pH & synergy matrix",
-        stat3: "Photoprotection & melanogenesis",
-        stat4: "Colorimetry & facial visagism",
-        m1Breadcrumb: "Module 01 • Clinical Consultation",
-        m1Title: "Skin & Hair Diagnostic Engine",
-        m1Subtitle: "Select the 5 clinical parameters below to generate a detailed cosmetic prescription with application order, pH notes, and wait times.",
-        lblSkinType: "1. Cutaneous Biotype (Sebaceous Activity)",
-        lblFitzpatrick: "2. Fitzpatrick Scale (Phototype I to VI)",
-        lblConcern: "3. Primary Dermatological Concern",
-        lblSensitivity: "4. Epidermal Barrier Reactivity",
-        lblPorosity: "5. Hair Shaft Porosity",
-        btnGenerateProtocol: "Generate Complete Clinical Protocol",
-        skinOptions: [
-            { val: "oily", label: "Lipidic Skin (Oily — diffuse shine and enlarged ostia)" },
-            { val: "combo", label: "Combination Skin (Oily T-zone and normal/dry cheeks)" },
-            { val: "dry", label: "Alipic Skin (Dry — lipid deficit and tightness)" },
-            { val: "normal", label: "Eudermic Skin (Normal — hydrolipidic balance)" }
-        ],
-        fitzOptions: [
-            { val: "I-II", label: "Phototypes I–II (Very fair skin, always burns, never tans)" },
-            { val: "III-IV", label: "Phototypes III–IV (Light to moderate olive/tan skin, tans gradually)" },
-            { val: "V-VI", label: "Phototypes V–VI (Deep brown to dark skin, high melanin and PIH risk)" }
-        ],
-        concernOptions: [
-            { val: "acne", label: "Comedogenic / Inflammatory Acne & Clogged Pores" },
-            { val: "melasma", label: "Melasma, Solar Lentigines & Post-Inflammatory Hyperpigmentation" },
-            { val: "aging", label: "Photoaging, Loss of Firmness & Fine Lines" },
-            { val: "barrier", label: "Deep Dehydration, Mild Rosacea or Compromised Barrier" }
-        ],
-        sensOptions: [
-            { val: "low", label: "Low Sensitivity (Tolerant to acids and retinoids)" },
-            { val: "high", label: "High Sensitivity (Easy flushing, stinging, or beginner skin)" }
-        ],
-        porosityOptions: [
-            { val: "low", label: "Low Porosity (Tightly bound cuticles, repels water)" },
-            { val: "medium", label: "Medium Porosity (Intact cuticles, balanced luster)" },
-            { val: "high", label: "High Porosity (Raised cuticles from heat/bleach, frizz)" }
-        ],
-        morningTitle: "Morning Protocol (Antioxidant Defense & Photoprotection)",
-        eveningTitle: "Evening Protocol (Cellular Renewal & Lamellar Repair)",
-        hairSummaryTitle: "Integrated Trichological Protocol",
-        phNoteLabel: "Formulation Note & Wait Time:",
-        m2Breadcrumb: "Module 02 • Complete Treatise",
-        m2Title: "Digital Treatise of Integral Beauty",
-        lblFontSize: "Text:",
-        lblBookmark: "Bookmark Chapter",
-        lblBookmarked: "Bookmarked",
-        btnPrev: "← Previous Chapter",
-        btnNext: "Next Chapter →",
-        m3Breadcrumb: "Module 03 • Cosmetic Chemistry",
-        m3Title: "16 Active Ingredients Encyclopedia & Compatibility Matrix",
-        m3Subtitle: "Verify pairing safety between two active ingredients and explore their clinical concentrations and optimal pH ranges.",
-        checkerTitle: "Interactive Chemical Pairing Checker",
-        lblActA: "Active A (First Layer)",
-        lblActB: "Active B (Second Layer)",
-        searchPlaceholder: "Search active by name, mechanism, or indication...",
-        catAll: "All Classes (16 Actives)",
-        catRet: "Retinoids & Analogs",
-        catAcid: "Exfoliating Acids & Depigmenting",
-        catAnti: "Antioxidants & Vasoprotectors",
-        catBar: "Barrier Repair & Peptides",
-        phRange: "Optimal pH",
-        concRange: "Clinical Concentration",
-        statusSafe: "SYNERGISTIC & SAFE COMBINATION",
-        statusCaution: "USE WITH CAUTION / ALTERNATE ROUTINES",
-        statusConflict: "CHEMICAL CONFLICT / HIGH IRRITATION RISK",
-        m4Breadcrumb: "Module 04 • Capillary Therapy",
-        m4Title: "Trichology & 4-Week Hair Care Calendar Generator",
-        m4Subtitle: "Evaluate cuticular porosity and generate a 12-treatment schedule balancing Hydration, Lipid Nutrition, and Protein Reconstruction.",
-        hairFormTitle: "Configure Capillary Therapy",
-        lblHairState: "Shaft Porosity / Damage Level",
-        lblScalpType: "Scalp Condition",
-        porosityTestTitle: "Clinical Absorption & Tactile Test",
-        porosityTestDesc: "Slide fingers upward along a clean dry strand: glassy smoothness indicates low porosity; slight resistance indicates medium porosity; roughness and snagging indicate high porosity (lifted cuticles). Acidification (pH 3.5–4.5) seals salt bonds.",
-        scalpOptions: [
-            { val: "balanced", label: "Balanced / Normal Scalp" },
-            { val: "oily", label: "Oily / Seborrheic-Prone Scalp" },
-            { val: "dry", label: "Dry / Sensitive Scalp" }
-        ],
-        m5Breadcrumb: "Module 05 • Harmony & Optics",
-        m5Title: "Visagism & 12-Season Colorimetry Studio",
-        m5Subtitle: "Combine temperature (undertone), chroma (intensity), and value (depth) to identify your seasonal palette and facial geometry.",
-        visFormTitle: "Season & Facial Analyzer",
-        lblUndertone: "1. Skin Temperature / Undertone",
-        lblContrast: "2. Personal Contrast (Skin x Hair x Eyes)",
-        lblFaceshape: "3. Predominant Facial Geometry",
-        undertoneOptions: [
-            { val: "warm", label: "Warm (Golden, peach pigments, greenish veins)" },
-            { val: "cool", label: "Cool (Rosy, bluish pigments, purplish veins)" },
-            { val: "neutral_warm", label: "Neutral-Warm / Golden Olive" },
-            { val: "neutral_cool", label: "Neutral-Cool / Ash Olive" }
-        ],
-        contrastOptions: [
-            { val: "high", label: "High Contrast (Fair skin with dark hair or deep skin with bright contrast)" },
-            { val: "medium", label: "Medium Contrast (Harmonic transition between skin, brows, and hair)" },
-            { val: "low", label: "Low / Muted Contrast (Close tonal values across skin, eyes, and hair)" }
-        ],
-        faceOptions: [
-            { val: "oval", label: "Oval (Balanced golden proportions)" },
-            { val: "round", label: "Round (Soft curves, similar width and length)" },
-            { val: "square", label: "Square (Angular jawline and forehead)" },
-            { val: "heart", label: "Inverted Triangle / Heart (Broad forehead, tapered chin)" },
-            { val: "oblong", label: "Oblong / Rectangular (Predominant vertical axis)" }
-        ],
-        footerDisclaimer: "Educational platform for cosmetology, trichology, and visagism. Technical content does not replace individualized medical dermatological consultation.",
-        footerEdition: "International Edition"
-    },
-    es: {
-        badgeEdition: "Enciclopedia Clínica",
-        subtitle: "Cosmetología Avanzada, Tricología y Visagismo",
-        btnPrint: "Exportar PDF",
-        nav1: "Diagnóstico y Rutina",
-        nav2: "Tratado E-Book (6 Capítulos)",
-        nav3: "Activos y Compatibilidad",
-        nav4: "Tricología y Calendario",
-        nav5: "Visagismo y 12 Estaciones",
-        heroKicker: "Plataforma Científica Multilingüe • PT / EN / ES / FR",
-        heroTitle: "Ciencia de la Piel, Tricología Aplicada y Armonía Estética",
-        heroDesc: "Un compendio digital interactivo diseñado con rigor dermatológico y cosmetológico. Diagnostique su perfil cutáneo y capilar, estudie los 6 capítulos completos, verifique sinergias químicas entre 16 activos y descubra su paleta cromática.",
-        stat1: "Tratado completo con marcadores",
-        stat2: "Matriz química de pH y sinergia",
-        stat3: "Fotoprotección y melanogénesis",
-        stat4: "Colorimetría y visagismo facial",
-        m1Breadcrumb: "Módulo 01 • Consulta Clínica",
-        m1Title: "Motor de Diagnóstico Cutáneo y Capilar",
-        m1Subtitle: "Seleccione los 5 parámetros clínicos para generar una prescripción cosmetológica detallada con orden de aplicación, notas de pH y tiempos de espera.",
-        lblSkinType: "1. Biotipo Cutáneo (Actividad Sebácea)",
-        lblFitzpatrick: "2. Escala de Fitzpatrick (Fototipo I a VI)",
-        lblConcern: "3. Preocupación Dermatológica Prioritaria",
-        lblSensitivity: "4. Reactividad de la Barrera Epidérmica",
-        lblPorosity: "5. Porosidad de la Fibra Capilar",
-        btnGenerateProtocol: "Generar Protocolo Clínico Completo",
-        skinOptions: [
-            { val: "oily", label: "Piel Lipídica (Grasa — brillo difuso y poros dilatados)" },
-            { val: "combo", label: "Piel Mixta (Zona T grasa y mejillas normales/secas)" },
-            { val: "dry", label: "Piel Alípica (Seca — déficit lipídico y tirantez)" },
-            { val: "normal", label: "Piel Eudérmica (Normal — equilibrio hidrolipídico)" }
-        ],
-        fitzOptions: [
-            { val: "I-II", label: "Fototipos I–II (Piel muy clara, siempre se quema, nunca se broncea)" },
-            { val: "III-IV", label: "Fototipos III–IV (Piel morena clara a moderada, broncea gradualmente)" },
-            { val: "V-VI", label: "Fototipos V–VI (Piel morena oscura a negra, alta melanina y riesgo de HPI)" }
-        ],
-        concernOptions: [
-            { val: "acne", label: "Acné Comedogénico / Inflamatorio y Poros Obstruidos" },
-            { val: "melasma", label: "Melasma, Léntigos Solares e Hiperpigmentación Postinflamatoria" },
-            { val: "aging", label: "Fotoenvejecimiento, Pérdida de Firmeza y Líneas Finas" },
-            { val: "barrier", label: "Deshidratación Profunda, Rosácea Leve o Barrera Dañada" }
-        ],
-        sensOptions: [
-            { val: "low", label: "Baja Sensibilidad (Tolerante a ácidos y retinoides)" },
-            { val: "high", label: "Alta Sensibilidad (Enrojecimiento fácil, ardor o piel principiante)" }
-        ],
-        porosityOptions: [
-            { val: "low", label: "Porosidad Baja (Cutículas muy cerradas, repele el agua)" },
-            { val: "medium", label: "Porosidad Media (Cutículas íntegras, brillo equilibrado)" },
-            { val: "high", label: "Porosidad Alta (Cutículas abiertas por química/calor, frizz)" }
-        ],
-        morningTitle: "Protocolo Diurno (Defensa Antioxidante y Fotoprotección)",
-        eveningTitle: "Protocolo Nocturno (Renovación Celular y Reparación Lamelar)",
-        hairSummaryTitle: "Conducta Tricológica Integrada",
-        phNoteLabel: "Nota Farmacotécnica y Tiempo de Espera:",
-        m2Breadcrumb: "Módulo 02 • Obra Completa",
-        m2Title: "Tratado Digital de Belleza Integral",
-        lblFontSize: "Texto:",
-        lblBookmark: "Guardar Capítulo",
-        lblBookmarked: "Capítulo Guardado",
-        btnPrev: "← Capítulo Anterior",
-        btnNext: "Siguiente Capítulo →",
-        m3Breadcrumb: "Módulo 03 • Química Cosmética",
-        m3Title: "Enciclopedia de 16 Activos y Matriz de Compatibilidad",
-        m3Subtitle: "Verifique la seguridad de combinación entre dos ingredientes activos y explore sus concentraciones clínicas y rangos de pH.",
-        checkerTitle: "Verificador Interactivo de Combinación Química",
-        lblActA: "Activo A (Primer Producto)",
-        lblActB: "Activo B (Segundo Producto)",
-        searchPlaceholder: "Buscar activo por nombre, mecanismo o indicación...",
-        catAll: "Todas las Clases (16 Activos)",
-        catRet: "Retinoides y Análogos",
-        catAcid: "Ácidos Exfoliantes y Despigmentantes",
-        catAnti: "Antioxidantes y Vasoprotectores",
-        catBar: "Reparación de Barrera y Péptidos",
-        phRange: "pH Óptimo",
-        concRange: "Concentración Habitual",
-        statusSafe: "COMBINACIÓN SINÉRGICA Y SEGURA",
-        statusCaution: "USAR CON PRECAUCIÓN / ALTERNAR HORARIOS",
-        statusConflict: "CONFLICTO QUÍMICO / ALTO RIESGO DE IRRITACIÓN",
-        m4Breadcrumb: "Módulo 04 • Terapia Capilar",
-        m4Title: "Tricología y Generador de Calendario Capilar (4 Semanas)",
-        m4Subtitle: "Evalúe la porosidad cuticular y genere un calendario de 12 tratamientos equilibrando Hidratación, Nutrición Lipídica y Reconstrucción Proteica.",
-        hairFormTitle: "Configurar Terapia Capilar",
-        lblHairState: "Nivel de Porosidad / Daño de la Fibra",
-        lblScalpType: "Condición del Cuero Cabelludo",
-        porosityTestTitle: "Prueba Clínica de Absorción y Tacto",
-        porosityTestDesc: "Deslice los dedos de abajo hacia arriba en un mechón limpio y seco: superficie lisa indica porosidad baja; ligera resistencia indica porosidad media; aspereza indica porosidad alta (cutículas levantadas). La acidificación (pH 3,5–4,5) sella los enlaces salinos.",
-        scalpOptions: [
-            { val: "balanced", label: "Cuero Cabelludo Equilibrado / Normal" },
-            { val: "oily", label: "Cuero Cabelludo Graso / Tendencia Seborreica" },
-            { val: "dry", label: "Cuero Cabelludo Seco / Sensible" }
-        ],
-        m5Breadcrumb: "Módulo 05 • Armonía y Óptica",
-        m5Title: "Estudio de Visagismo y Colorimetría de las 12 Estaciones",
-        m5Subtitle: "Combine temperatura (subtono), intensidad (croma) y profundidad (valor) para identificar su estación cromática y geometría facial.",
-        visFormTitle: "Analizador de Estación y Rostro",
-        lblUndertone: "1. Temperatura / Subtono de la Piel",
-        lblContrast: "2. Contraste Personal (Piel x Cabello x Ojos)",
-        lblFaceshape: "3. Geometría Facial Predominante",
-        undertoneOptions: [
-            { val: "warm", label: "Cálido (Pigmentos dorados, melocotón, venas verdosas)" },
-            { val: "cool", label: "Frío (Pigmentos rosados, azulados, venas violáceas)" },
-            { val: "neutral_warm", label: "Neutro-Cálido / Oliva Dorado" },
-            { val: "neutral_cool", label: "Neutro-Frío / Oliva Ceniza" }
-        ],
-        contrastOptions: [
-            { val: "high", label: "Alto Contraste (Piel clara con cabello oscuro o piel oscura con contraste brillante)" },
-            { val: "medium", label: "Contraste Medio (Transición armónica entre piel, cejas y cabello)" },
-            { val: "low", label: "Bajo Contraste / Suave (Tonos cercanos entre piel, ojos y cabello)" }
-        ],
-        faceOptions: [
-            { val: "oval", label: "Ovalado (Proporciones áureas equilibradas)" },
-            { val: "round", label: "Redondo (Ángulos suaves, ancho y largo similares)" },
-            { val: "square", label: "Cuadrado (Mandíbula y frente angulosas)" },
-            { val: "heart", label: "Triangular Invertido / Corazón (Frente amplia, mentón afilado)" },
-            { val: "oblong", label: "Alargado / Rectangular (Eje vertical predominante)" }
-        ],
-        footerDisclaimer: "Plataforma educativa de cosmetología, tricología y visagismo. La información técnica no sustituye la consulta médica dermatológica individualizada.",
-        footerEdition: "Edición Internacional"
-    },
-    fr: {
-        badgeEdition: "Encyclopédie Clinique",
-        subtitle: "Cosmétologie Avancée, Trichologie & Visagisme",
-        btnPrint: "Exporter PDF",
-        nav1: "Diagnostic & Routine",
-        nav2: "Traité E-Book (6 Chapitres)",
-        nav3: "Actifs & Compatibilité",
-        nav4: "Trichologie & Calendrier",
-        nav5: "Visagisme & 12 Saisons",
-        heroKicker: "Plateforme Scientifique Multilingue • PT / EN / ES / FR",
-        heroTitle: "Science de la Peau, Trichologie Appliquée et Harmonie Esthétique",
-        heroDesc: "Un compendium numérique interactif conçu avec rigueur dermatologique et cosmétologique. Diagnostiquez votre profil cutané et capillaire, étudiez les 6 chapitres complets, vérifiez les synergies chimiques entre 16 actifs et découvrez votre palette saisonnière.",
-        stat1: "Traité complet avec signets",
-        stat2: "Matrice chimique de pH et synergie",
-        stat3: "Photoprotection & mélanogenèse",
-        stat4: "Colorimétrie & visagisme facial",
-        m1Breadcrumb: "Module 01 • Consultation Clinique",
-        m1Title: "Moteur de Diagnostic Cutané & Capillaire",
-        m1Subtitle: "Sélectionnez les 5 paramètres cliniques ci-dessous pour générer une prescription cosmétologique détaillée avec ordre d'application, notes de pH et temps de pause.",
-        lblSkinType: "1. Biotype Cutané (Activité Sébacée)",
-        lblFitzpatrick: "2. Échelle de Fitzpatrick (Phototype I à VI)",
-        lblConcern: "3. Préoccupation Dermatologique Prioritaire",
-        lblSensitivity: "4. Réactivité de la Barrière Épidermique",
-        lblPorosity: "5. Porosité de la Tige Capillaire",
-        btnGenerateProtocol: "Générer le Protocole Clinique Complet",
-        skinOptions: [
-            { val: "oily", label: "Peau Lipidique (Grasse — brillance diffuse et pores dilatés)" },
-            { val: "combo", label: "Peau Mixte (Zone T grasse et joues normales/sèches)" },
-            { val: "dry", label: "Peau Alipidique (Sèche — déficit lipidique et tiraillements)" },
-            { val: "normal", label: "Peau Eudermique (Normale — équilibre hydrolipidique)" }
-        ],
-        fitzOptions: [
-            { val: "I-II", label: "Phototypes I–II (Peau très claire, brûle toujours, ne bronze jamais)" },
-            { val: "III-IV", label: "Phototypes III–IV (Peau mate claire à modérée, bronze progressivement)" },
-            { val: "V-VI", label: "Phototypes V–VI (Peau foncée à noire, mélanine élevée et risque d'HPI)" }
-        ],
-        concernOptions: [
-            { val: "acne", label: "Acné Comédonienne / Inflammatoire et Pores Obstrués" },
-            { val: "melasma", label: "Mélasma, Lentigos Solaires et Hyperpigmentation Post-Inflammatoire" },
-            { val: "aging", label: "Photovieillissement, Perte de Fermeté et Ridules" },
-            { val: "barrier", label: "Déshydratation Profonde, Rosacée Légère ou Barrière Altérée" }
-        ],
-        sensOptions: [
-            { val: "low", label: "Faible Sensibilité (Tolérante aux acides et rétinoïdes)" },
-            { val: "high", label: "Haute Sensibilité (Rougeurs faciles, picotements ou peau débutante)" }
-        ],
-        porosityOptions: [
-            { val: "low", label: "Porosité Faible (Cuticules très fermées, repousse l'eau)" },
-            { val: "medium", label: "Porosité Moyenne (Cuticules intègres, brillance équilibrée)" },
-            { val: "high", label: "Porosité Élevée (Cuticules ouvertes par chimie/chaleur, frisottis)" }
-        ],
-        morningTitle: "Protocole Matinal (Défense Antioxydante & Photoprotection)",
-        eveningTitle: "Protocole Nocturne (Renouvellement Cellulaire & Réparation Lamellaire)",
-        hairSummaryTitle: "Conduite Trichologique Intégrée",
-        phNoteLabel: "Note Galénique & Temps de Pause :",
-        m2Breadcrumb: "Module 02 • Ouvrage Complet",
-        m2Title: "Traité Numérique de Beauté Intégrale",
-        lblFontSize: "Texte :",
-        lblBookmark: "Marquer le Chapitre",
-        lblBookmarked: "Chapitre Marqué",
-        btnPrev: "← Chapitre Précédent",
-        btnNext: "Chapitre Suivant →",
-        m3Breadcrumb: "Module 03 • Chimie Cosmétique",
-        m3Title: "Encyclopédie de 16 Actifs & Matrice de Compatibilité",
-        m3Subtitle: "Vérifiez la sécurité d'association entre deux ingrédients actifs et explorez leurs concentrations cliniques et plages de pH optimales.",
-        checkerTitle: "Vérificateur Interactif d'Association Chimique",
-        lblActA: "Actif A (Premier Produit)",
-        lblActB: "Actif B (Second Produit)",
-        searchPlaceholder: "Rechercher un actif par nom, mécanisme ou indication...",
-        catAll: "Toutes les Classes (16 Actifs)",
-        catRet: "Rétinoïdes & Analogues",
-        catAcid: "Acides Exfoliants & Dépigmentants",
-        catAnti: "Antioxydants & Vasoprotecteurs",
-        catBar: "Réparation de Barrière & Peptides",
-        phRange: "pH Optimal",
-        concRange: "Concentration Usuelle",
-        statusSafe: "ASSOCIATION SYNERGIQUE ET SÛRE",
-        statusCaution: "UTILISER AVEC PRÉCAUTION / ALTERNER",
-        statusConflict: "CONFLIT CHIMIQUE / RISQUE ÉLEVÉ D'IRRITATION",
-        m4Breadcrumb: "Module 04 • Thérapie Capillaire",
-        m4Title: "Trichologie & Générateur de Calendrier Capillaire (4 Semaines)",
-        m4Subtitle: "Évaluez la porosité cuticulaire et générez un calendrier de 12 soins équilibrant Hydratation, Nutrition Lipidique et Reconstruction Protéique.",
-        hairFormTitle: "Configurer la Thérapie Capillaire",
-        lblHairState: "Niveau de Porosité / Altération de la Fibre",
-        lblScalpType: "État du Cuir Chevelu",
-        porosityTestTitle: "Test Clinique d'Absorption et de Toucher",
-        porosityTestDesc: "Glissez les doigts de bas en haut sur une mèche propre et sèche : une surface lisse indique une faible porosité ; une légère résistance indique une porosité moyenne ; une rugosité indique une forte porosité (cuticules soulevées). L'acidification (pH 3,5–4,5) referme les liaisons salines.",
-        scalpOptions: [
-            { val: "balanced", label: "Cuir Chevelu Équilibré / Normal" },
-            { val: "oily", label: "Cuir Chevelu Gras / Tendance Séborrhéique" },
-            { val: "dry", label: "Cuir Chevelu Sec / Sensible" }
-        ],
-        m5Breadcrumb: "Module 05 • Harmonie & Optique",
-        m5Title: "Studio de Visagisme & Colorimétrie des 12 Saisons",
-        m5Subtitle: "Combinez température (sous-ton), intensité (chroma) et profondeur (valeur) pour identifier votre saison chromatique et votre géométrie faciale.",
-        visFormTitle: "Analyseur de Saison & Visage",
-        lblUndertone: "1. Température / Sous-ton de la Peau",
-        lblContrast: "2. Contraste Personnel (Peau x Cheveux x Yeux)",
-        lblFaceshape: "3. Géométrie Faciale Prédominante",
-        undertoneOptions: [
-            { val: "warm", label: "Chaud (Pigments dorés, pêche, veines verdâtres)" },
-            { val: "cool", label: "Froid (Pigments rosés, bleutés, veines violacées)" },
-            { val: "neutral_warm", label: "Neutre-Chaud / Olive Doré" },
-            { val: "neutral_cool", label: "Neutre-Froid / Olive Cendré" }
-        ],
-        contrastOptions: [
-            { val: "high", label: "Contraste Élevé (Peau claire avec cheveux foncés ou peau foncée contrastée)" },
-            { val: "medium", label: "Contraste Moyen (Transition harmonieuse entre peau, sourcils et cheveux)" },
-            { val: "low", label: "Faible Contraste / Doux (Valeurs proches entre peau, yeux et cheveux)" }
-        ],
-        faceOptions: [
-            { val: "oval", label: "Ovale (Proportions d'or équilibrées)" },
-            { val: "round", label: "Rond (Courbes douces, largeur et longueur similaires)" },
-            { val: "square", label: "Carré (Mâchoire et front anguleux)" },
-            { val: "heart", label: "Triangle Inversé / Cœur (Front large, menton affiné)" },
-            { val: "oblong", label: "Allongé / Rectangulaire (Axe vertical prédominant)" }
-        ],
-        footerDisclaimer: "Plateforme éducative de cosmétologie, trichologie et visagisme. Les informations techniques ne remplacent pas une consultation dermatologique médicale.",
-        footerEdition: "Édition Internationale"
-    }
-};
+(function() {
+    'use strict';
 
-// ============================================================================
-// 16 ACTIVE INGREDIENTS DATABASE (MULTILINGUAL)
-// ============================================================================
-const ACTIVES_DB = [
-    {
-        id: "retinol",
-        cat: "retinoid",
-        ph: "5.5 – 6.5",
-        conc: "0.05% – 0.3%",
-        name: { pt: "Retinol", en: "Retinol", es: "Retinol", fr: "Rétinol" },
-        mech: {
-            pt: "Precursor do ácido retinoico; liga-se a receptores nucleares RAR/RXR, acelerando mitose basal e síntese de colágeno tipo I e III.",
-            en: "Retinoic acid precursor; binds to RAR/RXR nuclear receptors, accelerating basal mitosis and Type I & III collagen synthesis.",
-            es: "Precursor del ácido retinoico; se une a receptores nucleares RAR/RXR acelerando la mitosis basal y síntesis de colágeno I y III.",
-            fr: "Précurseur de l'acide rétinoïque ; se lie aux récepteurs nucléaires RAR/RXR accélérant la mitose basale et la synthèse de collagène."
+    // ============================================================================
+    // 1. FULL MULTILINGUAL DICTIONARY (PT, EN, ES, FR)
+    // ============================================================================
+    const I18N = {
+        pt: {
+            htmlLang: "pt-BR",
+            badgeEdition: "Enciclopédia Clínica",
+            subtitle: "Cosmetologia Avançada, Tricologia & Visagismo",
+            btnPrint: "Exportar PDF",
+            nav1: "Diagnóstico & Rotina",
+            nav2: "Tratado E-Book (6 Capítulos)",
+            nav3: "Ativos & Compatibilidade",
+            nav4: "Tricologia & Cronograma",
+            nav5: "Visagismo & 12 Estações",
+            heroKicker: "Plataforma Científica Multilíngue • PT / EN / ES / FR",
+            heroTitle: "Ciência da Pele, Tricologia Aplicada e Harmonia Estética",
+            heroDesc: "Um compêndio digital interativo projetado com rigor dermatológico e cosmetológico. Diagnostique seu perfil cutâneo e capilar, estude os 6 capítulos completos do tratado, verifique sinergias químicas entre 16 ativos e descubra sua cartela cromática.",
+            statNum1: "6 Capítulos",
+            stat1: "Tratado completo com marcadores",
+            statNum2: "16 Ativos",
+            stat2: "Matriz química de pH e sinergia",
+            stat3: "Fotoproteção & melanogênese",
+            statNum4: "12 Estações",
+            stat4: "Colorimetria & visagismo facial",
+            m1Breadcrumb: "Módulo 01 • Consultoria Clínica",
+            m1Title: "Motor de Diagnóstico Cutâneo & Capilar",
+            m1Subtitle: "Selecione os 5 parâmetros clínicos abaixo para gerar uma prescrição cosmetológica detalhada com ordem de aplicação, faixa de pH e tempo de pausa.",
+            lblSkinType: "1. Biotipo Cutâneo (Atividade Sebácea)",
+            lblFitzpatrick: "2. Escala de Fitzpatrick (Fototipo I a VI)",
+            lblConcern: "3. Queixa Dermatológica Prioritária",
+            lblSensitivity: "4. Reatividade da Barreira Epidérmica",
+            lblPorosity: "5. Porosidade da Haste Capilar",
+            btnGenerateProtocol: "Gerar Protocolo Clínico Completo",
+            skinOptions: [
+                { val: "oily", label: "Pele Lipídica (Oleosa — brilho difuso e óstios dilatados)" },
+                { val: "combo", label: "Pele Mista (Zona T oleosa e região malar normal/seca)" },
+                { val: "dry", label: "Pele Alípica (Seca — déficit lipídico e repuxamento)" },
+                { val: "normal", label: "Pele Eudérmica (Normal — equilíbrio hidrolipídico)" }
+            ],
+            fitzOptions: [
+                { val: "I-II", label: "Fototipos I–II (Pele muito clara, sempre queima, nunca bronzeia)" },
+                { val: "III-IV", label: "Fototipos III–IV (Pele morena clara a moderada, bronzeia gradualmente)" },
+                { val: "V-VI", label: "Fototipos V–VI (Pele morena escura a retinta, alta melanina e risco de HPI)" }
+            ],
+            concernOptions: [
+                { val: "acne", label: "Acne Comedogênica / Inflamatória e Poros Obstruídos" },
+                { val: "melasma", label: "Melasma, Lentigos Solares e Hiperpigmentação Pós-Inflamatória" },
+                { val: "aging", label: "Fotoenvelhecimento, Perda de Firmeza e Rugas Finas" },
+                { val: "barrier", label: "Desidratação Profunda, Rosácea Leve ou Barreira Danificada" }
+            ],
+            sensOptions: [
+                { val: "low", label: "Baixa Sensibilidade (Tolerante a ácidos e retinoides)" },
+                { val: "high", label: "Alta Sensibilidade (Rubor fácil, ardor ou pele iniciante)" }
+            ],
+            porosityOptions: [
+                { val: "low", label: "Porosidade Baixa (Cutículas muito fechadas, repele água)" },
+                { val: "medium", label: "Porosidade Média (Cutículas íntegras, brilho equilibrado)" },
+                { val: "high", label: "Porosidade Alta (Cutículas abertas por química/calor, frizz)" }
+            ],
+            morningTitle: "Protocolo Diurno (Defesa Antioxidante & Fotoproteção)",
+            eveningTitle: "Protocolo Noturno (Renovação Celular & Reparo Lamelar)",
+            hairSummaryTitle: "Conduta Tricológica Integrada",
+            stepLabel: "Passo",
+            m2Breadcrumb: "Módulo 02 • Obra Completa",
+            m2Title: "Tratado Digital de Beleza Integral",
+            lblFontSize: "Texto:",
+            lblBookmark: "Salvar Capítulo",
+            lblBookmarked: "Capítulo Salvo",
+            chapterPrefix: "Capítulo",
+            btnPrev: "← Capítulo Anterior",
+            btnNext: "Próximo Capítulo →",
+            m3Breadcrumb: "Módulo 03 • Farmacotécnica & Química",
+            m3Title: "Enciclopédia de 16 Ativos & Matriz de Compatibilidade",
+            m3Subtitle: "Verifique a segurança de combinação entre dois ingredientes ativos e explore suas concentrações clínicas e faixas de pH.",
+            checkerTitle: "Verificador Interativo de Combinação Química",
+            lblActA: "Ativo A (Primeiro Produto)",
+            lblActB: "Ativo B (Segundo Produto)",
+            searchPlaceholder: "Buscar ativo por nome, mecanismo ou indicação...",
+            catAll: "Todas as Classes (16 Ativos)",
+            catRet: "Retinoides & Análogos",
+            catAcid: "Ácidos Esfoliantes & Despigmentantes",
+            catAnti: "Antioxidantes & Vasoprotetores",
+            catBar: "Reparo de Barreira & Peptídeos",
+            concRange: "Concentração Usual",
+            statusSafe: "COMBINAÇÃO SINÉRGICA E SEGURA",
+            statusCaution: "USO COM CAUTELA / ALTERNAR HORÁRIOS",
+            statusConflict: "CONFLITO QUÍMICO / ALTO RISCO DE IRRITAÇÃO",
+            m4Breadcrumb: "Módulo 04 • Terapia Capilar",
+            m4Title: "Tricologia & Gerador de Cronograma Capilar (4 Semanas)",
+            m4Subtitle: "Avalie a porosidade cuticular e gere um calendário de 12 tratamentos equilibrando Hidratação, Nutrição Lipídica e Reconstrução Proteica.",
+            hairFormTitle: "Configurar Terapia Capilar",
+            lblHairState: "Nível de Porosidade / Dano da Haste",
+            lblScalpType: "Condição do Couro Cabeludo",
+            porosityTestTitle: "Teste Clínico de Absorção e Tato",
+            porosityTestDesc: "Deslize os dedos de baixo para cima em um fio limpo e seco: superfície lisa indica porosidade baixa; leve resistência indica porosidade média; aspereza e nós indicam porosidade alta (cutículas levantadas). A acidificação (pH 3,5–4,5) sela as ligações salinas.",
+            scalpOptions: [
+                { val: "balanced", label: "Couro Cabeludo Equilibrado / Normal" },
+                { val: "oily", label: "Couro Cabeludo Oleoso / Tendência Seborreica" },
+                { val: "dry", label: "Couro Cabeludo Seco / Sensível" }
+            ],
+            washLabel: "Lavagem",
+            m5Breadcrumb: "Módulo 05 • Harmonia & Óptica",
+            m5Title: "Estúdio de Visagismo & Colorimetria das 12 Estações",
+            m5Subtitle: "Combine temperatura (subtom), intensidade (croma) e profundidade (valor) para identificar sua estação cromática e geometria facial.",
+            visFormTitle: "Analisador de Estação & Rosto",
+            lblUndertone: "1. Temperatura / Subtom da Pele",
+            lblContrast: "2. Contraste Pessoal (Pele x Cabelo x Olhos)",
+            lblFaceshape: "3. Geometria Facial Predominante",
+            undertoneOptions: [
+                { val: "warm", label: "Quente (Pigmentos dourados, pêssego, veias esverdeadas)" },
+                { val: "cool", label: "Frio (Pigmentos rosados, azulados, veias arroxeadas)" },
+                { val: "neutral_warm", label: "Neutro-Quente / Oliva Dourado" },
+                { val: "neutral_cool", label: "Neutro-Frio / Oliva Acinzentado" }
+            ],
+            contrastOptions: [
+                { val: "high", label: "Alto Contraste (Pele clara com cabelos muito escuros ou pele retinta com olhos/sorriso brilhantes)" },
+                { val: "medium", label: "Médio Contraste (Transição harmônica entre pele, sobrancelhas e cabelos)" },
+                { val: "low", label: "Baixo Contraste / Suave (Tons próximos entre pele, olhos e cabelos)" }
+            ],
+            faceOptions: [
+                { val: "oval", label: "Oval (Proporções áureas equilibradas)" },
+                { val: "round", label: "Redondo (Ângulos suaves, largura e altura similares)" },
+                { val: "square", label: "Quadrado (Mandíbula e fronte angulosas)" },
+                { val: "heart", label: "Triangular Invertido / Coração (Fronte ampla, mento afilado)" },
+                { val: "oblong", label: "Alongado / Retangular (Eixo vertical predominante)" }
+            ],
+            footerDisclaimer: "Plataforma educacional de cosmetologia, tricologia e visagismo. As informações técnicas não substituem consulta médica dermatológica individualizada.",
+            footerEdition: "Edição Internacional"
+        },
+        en: {
+            htmlLang: "en",
+            badgeEdition: "Clinical Encyclopedia",
+            subtitle: "Advanced Cosmetology, Trichology & Visagism",
+            btnPrint: "Export PDF",
+            nav1: "Diagnostics & Routine",
+            nav2: "E-Book Treatise (6 Chapters)",
+            nav3: "Actives & Compatibility",
+            nav4: "Trichology & Calendar",
+            nav5: "Visagism & 12 Seasons",
+            heroKicker: "Multilingual Scientific Platform • PT / EN / ES / FR",
+            heroTitle: "Skin Science, Applied Trichology & Aesthetic Harmony",
+            heroDesc: "An interactive digital compendium engineered with dermatological and cosmetic chemistry rigor. Diagnose your skin and hair profile, study all 6 treatise chapters, verify chemical synergies across 16 actives, and discover your seasonal palette.",
+            statNum1: "6 Chapters",
+            stat1: "Complete treatise with bookmarks",
+            statNum2: "16 Actives",
+            stat2: "Chemical pH & synergy matrix",
+            stat3: "Photoprotection & melanogenesis",
+            statNum4: "12 Seasons",
+            stat4: "Colorimetry & facial visagism",
+            m1Breadcrumb: "Module 01 • Clinical Consultation",
+            m1Title: "Skin & Hair Diagnostic Engine",
+            m1Subtitle: "Select the 5 clinical parameters below to generate a detailed cosmetic prescription with application order, pH notes, and wait times.",
+            lblSkinType: "1. Cutaneous Biotype (Sebaceous Activity)",
+            lblFitzpatrick: "2. Fitzpatrick Scale (Phototype I to VI)",
+            lblConcern: "3. Primary Dermatological Concern",
+            lblSensitivity: "4. Epidermal Barrier Reactivity",
+            lblPorosity: "5. Hair Shaft Porosity",
+            btnGenerateProtocol: "Generate Complete Clinical Protocol",
+            skinOptions: [
+                { val: "oily", label: "Lipidic Skin (Oily — diffuse shine and enlarged ostia)" },
+                { val: "combo", label: "Combination Skin (Oily T-zone and normal/dry cheeks)" },
+                { val: "dry", label: "Alipic Skin (Dry — lipid deficit and tightness)" },
+                { val: "normal", label: "Eudermic Skin (Normal — hydrolipidic balance)" }
+            ],
+            fitzOptions: [
+                { val: "I-II", label: "Phototypes I–II (Very fair skin, always burns, never tans)" },
+                { val: "III-IV", label: "Phototypes III–IV (Light to moderate olive/tan skin, tans gradually)" },
+                { val: "V-VI", label: "Phototypes V–VI (Deep brown to dark skin, high melanin and PIH risk)" }
+            ],
+            concernOptions: [
+                { val: "acne", label: "Comedogenic / Inflammatory Acne & Clogged Pores" },
+                { val: "melasma", label: "Melasma, Solar Lentigines & Post-Inflammatory Hyperpigmentation" },
+                { val: "aging", label: "Photoaging, Loss of Firmness & Fine Lines" },
+                { val: "barrier", label: "Deep Dehydration, Mild Rosacea or Compromised Barrier" }
+            ],
+            sensOptions: [
+                { val: "low", label: "Low Sensitivity (Tolerant to acids and retinoids)" },
+                { val: "high", label: "High Sensitivity (Easy flushing, stinging, or beginner skin)" }
+            ],
+            porosityOptions: [
+                { val: "low", label: "Low Porosity (Tightly bound cuticles, repels water)" },
+                { val: "medium", label: "Medium Porosity (Intact cuticles, balanced luster)" },
+                { val: "high", label: "High Porosity (Raised cuticles from heat/bleach, frizz)" }
+            ],
+            morningTitle: "Morning Protocol (Antioxidant Defense & Photoprotection)",
+            eveningTitle: "Evening Protocol (Cellular Renewal & Lamellar Repair)",
+            hairSummaryTitle: "Integrated Trichological Protocol",
+            stepLabel: "Step",
+            m2Breadcrumb: "Module 02 • Complete Treatise",
+            m2Title: "Digital Treatise of Integral Beauty",
+            lblFontSize: "Text:",
+            lblBookmark: "Bookmark Chapter",
+            lblBookmarked: "Bookmarked",
+            chapterPrefix: "Chapter",
+            btnPrev: "← Previous Chapter",
+            btnNext: "Next Chapter →",
+            m3Breadcrumb: "Module 03 • Cosmetic Chemistry",
+            m3Title: "16 Active Ingredients Encyclopedia & Compatibility Matrix",
+            m3Subtitle: "Verify pairing safety between two active ingredients and explore their clinical concentrations and optimal pH ranges.",
+            checkerTitle: "Interactive Chemical Pairing Checker",
+            lblActA: "Active A (First Layer)",
+            lblActB: "Active B (Second Layer)",
+            searchPlaceholder: "Search active by name, mechanism, or indication...",
+            catAll: "All Classes (16 Actives)",
+            catRet: "Retinoids & Analogs",
+            catAcid: "Exfoliating Acids & Depigmenting",
+            catAnti: "Antioxidants & Vasoprotectors",
+            catBar: "Barrier Repair & Peptides",
+            concRange: "Clinical Concentration",
+            statusSafe: "SYNERGISTIC & SAFE COMBINATION",
+            statusCaution: "USE WITH CAUTION / ALTERNATE ROUTINES",
+            statusConflict: "CHEMICAL CONFLICT / HIGH IRRITATION RISK",
+            m4Breadcrumb: "Module 04 • Capillary Therapy",
+            m4Title: "Trichology & 4-Week Hair Care Calendar Generator",
+            m4Subtitle: "Evaluate cuticular porosity and generate a 12-treatment schedule balancing Hydration, Lipid Nutrition, and Protein Reconstruction.",
+            hairFormTitle: "Configure Capillary Therapy",
+            lblHairState: "Shaft Porosity / Damage Level",
+            lblScalpType: "Scalp Condition",
+            porosityTestTitle: "Clinical Absorption & Tactile Test",
+            porosityTestDesc: "Slide fingers upward along a clean dry strand: glassy smoothness indicates low porosity; slight resistance indicates medium porosity; roughness and snagging indicate high porosity (lifted cuticles). Acidification (pH 3.5–4.5) seals salt bonds.",
+            scalpOptions: [
+                { val: "balanced", label: "Balanced / Normal Scalp" },
+                { val: "oily", label: "Oily / Seborrheic-Prone Scalp" },
+                { val: "dry", label: "Dry / Sensitive Scalp" }
+            ],
+            washLabel: "Wash",
+            m5Breadcrumb: "Module 05 • Harmony & Optics",
+            m5Title: "Visagism & 12-Season Colorimetry Studio",
+            m5Subtitle: "Combine temperature (undertone), chroma (intensity), and value (depth) to identify your seasonal palette and facial geometry.",
+            visFormTitle: "Season & Facial Analyzer",
+            lblUndertone: "1. Skin Temperature / Undertone",
+            lblContrast: "2. Personal Contrast (Skin x Hair x Eyes)",
+            lblFaceshape: "3. Predominant Facial Geometry",
+            undertoneOptions: [
+                { val: "warm", label: "Warm (Golden, peach pigments, greenish veins)" },
+                { val: "cool", label: "Cool (Rosy, bluish pigments, purplish veins)" },
+                { val: "neutral_warm", label: "Neutral-Warm / Golden Olive" },
+                { val: "neutral_cool", label: "Neutral-Cool / Ash Olive" }
+            ],
+            contrastOptions: [
+                { val: "high", label: "High Contrast (Fair skin with dark hair or deep skin with bright contrast)" },
+                { val: "medium", label: "Medium Contrast (Harmonic transition between skin, brows, and hair)" },
+                { val: "low", label: "Low / Muted Contrast (Close tonal values across skin, eyes, and hair)" }
+            ],
+            faceOptions: [
+                { val: "oval", label: "Oval (Balanced golden proportions)" },
+                { val: "round", label: "Round (Soft curves, similar width and length)" },
+                { val: "square", label: "Square (Angular jawline and forehead)" },
+                { val: "heart", label: "Inverted Triangle / Heart (Broad forehead, tapered chin)" },
+                { val: "oblong", label: "Oblong / Rectangular (Predominant vertical axis)" }
+            ],
+            footerDisclaimer: "Educational platform for cosmetology, trichology, and visagism. Technical content does not replace individualized medical dermatological consultation.",
+            footerEdition: "International Edition"
+        },
+        es: {
+            htmlLang: "es",
+            badgeEdition: "Enciclopedia Clínica",
+            subtitle: "Cosmetología Avanzada, Tricología y Visagismo",
+            btnPrint: "Exportar PDF",
+            nav1: "Diagnóstico y Rutina",
+            nav2: "Tratado E-Book (6 Capítulos)",
+            nav3: "Activos y Compatibilidad",
+            nav4: "Tricología y Calendario",
+            nav5: "Visagismo y 12 Estaciones",
+            heroKicker: "Plataforma Científica Multilingüe • PT / EN / ES / FR",
+            heroTitle: "Ciencia de la Piel, Tricología Aplicada y Armonía Estética",
+            heroDesc: "Un compendio digital interactivo diseñado con rigor dermatológico y cosmetológico. Diagnostique su perfil cutáneo y capilar, estudie los 6 capítulos completos, verifique sinergias químicas entre 16 activos y descubra su paleta cromática.",
+            statNum1: "6 Capítulos",
+            stat1: "Tratado completo con marcadores",
+            statNum2: "16 Activos",
+            stat2: "Matriz química de pH y sinergia",
+            stat3: "Fotoprotección y melanogénesis",
+            statNum4: "12 Estaciones",
+            stat4: "Colorimetría y visagismo facial",
+            m1Breadcrumb: "Módulo 01 • Consulta Clínica",
+            m1Title: "Motor de Diagnóstico Cutáneo y Capilar",
+            m1Subtitle: "Seleccione los 5 parámetros clínicos para generar una prescripción cosmetológica detallada con orden de aplicación, notas de pH y tiempos de espera.",
+            lblSkinType: "1. Biotipo Cutáneo (Actividad Sebácea)",
+            lblFitzpatrick: "2. Escala de Fitzpatrick (Fototipo I a VI)",
+            lblConcern: "3. Preocupación Dermatológica Prioritaria",
+            lblSensitivity: "4. Reactividad de la Barrera Epidérmica",
+            lblPorosity: "5. Porosidad de la Fibra Capilar",
+            btnGenerateProtocol: "Generar Protocolo Clínico Completo",
+            skinOptions: [
+                { val: "oily", label: "Piel Lipídica (Grasa — brillo difuso y poros dilatados)" },
+                { val: "combo", label: "Piel Mixta (Zona T grasa y mejillas normales/secas)" },
+                { val: "dry", label: "Piel Alípica (Seca — déficit lipídico y tirantez)" },
+                { val: "normal", label: "Piel Eudérmica (Normal — equilibrio hidrolipídico)" }
+            ],
+            fitzOptions: [
+                { val: "I-II", label: "Fototipos I–II (Piel muy clara, siempre se quema, nunca se broncea)" },
+                { val: "III-IV", label: "Fototipos III–IV (Piel morena clara a moderada, broncea gradualmente)" },
+                { val: "V-VI", label: "Fototipos V–VI (Piel morena oscura a negra, alta melanina y riesgo de HPI)" }
+            ],
+            concernOptions: [
+                { val: "acne", label: "Acné Comedogénico / Inflamatorio y Poros Obstruidos" },
+                { val: "melasma", label: "Melasma, Léntigos Solares e Hiperpigmentación Postinflamatoria" },
+                { val: "aging", label: "Fotoenvejecimiento, Pérdida de Firmeza y Líneas Finas" },
+                { val: "barrier", label: "Deshidratación Profunda, Rosácea Leve o Barrera Dañada" }
+            ],
+            sensOptions: [
+                { val: "low", label: "Baja Sensibilidad (Tolerante a ácidos y retinoides)" },
+                { val: "high", label: "Alta Sensibilidad (Enrojecimiento fácil, ardor o piel principiante)" }
+            ],
+            porosityOptions: [
+                { val: "low", label: "Porosidad Baja (Cutículas muy cerradas, repele el agua)" },
+                { val: "medium", label: "Porosidad Media (Cutículas íntegras, brillo equilibrado)" },
+                { val: "high", label: "Porosidad Alta (Cutículas abiertas por química/calor, frizz)" }
+            ],
+            morningTitle: "Protocolo Diurno (Defensa Antioxidante y Fotoprotección)",
+            eveningTitle: "Protocolo Nocturno (Renovación Celular y Reparación Lamelar)",
+            hairSummaryTitle: "Conducta Tricológica Integrada",
+            stepLabel: "Paso",
+            m2Breadcrumb: "Módulo 02 • Obra Completa",
+            m2Title: "Tratado Digital de Belleza Integral",
+            lblFontSize: "Texto:",
+            lblBookmark: "Guardar Capítulo",
+            lblBookmarked: "Capítulo Guardado",
+            chapterPrefix: "Capítulo",
+            btnPrev: "← Capítulo Anterior",
+            btnNext: "Siguiente Capítulo →",
+            m3Breadcrumb: "Módulo 03 • Química Cosmética",
+            m3Title: "Enciclopedia de 16 Activos y Matriz de Compatibilidad",
+            m3Subtitle: "Verifique la seguridad de combinación entre dos ingredientes activos y explore sus concentraciones clínicas y rangos de pH.",
+            checkerTitle: "Verificador Interactivo de Combinación Química",
+            lblActA: "Activo A (Primer Producto)",
+            lblActB: "Activo B (Segundo Producto)",
+            searchPlaceholder: "Buscar activo por nombre, mecanismo o indicación...",
+            catAll: "Todas las Clases (16 Activos)",
+            catRet: "Retinoides y Análogos",
+            catAcid: "Ácidos Exfoliantes y Despigmentantes",
+            catAnti: "Antioxidantes y Vasoprotectores",
+            catBar: "Reparación de Barrera y Péptidos",
+            concRange: "Concentración Habitual",
+            statusSafe: "COMBINACIÓN SINÉRGICA Y SEGURA",
+            statusCaution: "USAR CON PRECAUCIÓN / ALTERNAR HORARIOS",
+            statusConflict: "CONFLICTO QUÍMICO / ALTO RIESGO DE IRRITACIÓN",
+            m4Breadcrumb: "Módulo 04 • Terapia Capilar",
+            m4Title: "Tricología y Generador de Calendario Capilar (4 Semanas)",
+            m4Subtitle: "Evalúe la porosidad cuticular y genere un calendario de 12 tratamientos equilibrando Hidratación, Nutrición Lipídica y Reconstrucción Proteica.",
+            hairFormTitle: "Configurar Terapia Capilar",
+            lblHairState: "Nivel de Porosidad / Daño de la Fibra",
+            lblScalpType: "Condición del Cuero Cabelludo",
+            porosityTestTitle: "Prueba Clínica de Absorción y Tacto",
+            porosityTestDesc: "Deslice los dedos de abajo hacia arriba en un mechón limpio y seco: superficie lisa indica porosidad baja; ligera resistencia indica porosidad media; aspereza indica porosidad alta (cutículas levantadas). La acidificación (pH 3,5–4,5) sella los enlaces salinos.",
+            scalpOptions: [
+                { val: "balanced", label: "Cuero Cabelludo Equilibrado / Normal" },
+                { val: "oily", label: "Cuero Cabelludo Graso / Tendencia Seborreica" },
+                { val: "dry", label: "Cuero Cabelludo Seco / Sensible" }
+            ],
+            washLabel: "Lavado",
+            m5Breadcrumb: "Módulo 05 • Armonía y Óptica",
+            m5Title: "Estudio de Visagismo y Colorimetría de las 12 Estaciones",
+            m5Subtitle: "Combine temperatura (subtono), intensidad (croma) y profundidad (valor) para identificar su estación cromática y geometría facial.",
+            visFormTitle: "Analizador de Estación y Rostro",
+            lblUndertone: "1. Temperatura / Subtono de la Piel",
+            lblContrast: "2. Contraste Personal (Piel x Cabello x Ojos)",
+            lblFaceshape: "3. Geometría Facial Predominante",
+            undertoneOptions: [
+                { val: "warm", label: "Cálido (Pigmentos dorados, melocotón, venas verdosas)" },
+                { val: "cool", label: "Frío (Pigmentos rosados, azulados, venas violáceas)" },
+                { val: "neutral_warm", label: "Neutro-Cálido / Oliva Dorado" },
+                { val: "neutral_cool", label: "Neutro-Frío / Oliva Ceniza" }
+            ],
+            contrastOptions: [
+                { val: "high", label: "Alto Contraste (Piel clara con cabello oscuro o piel oscura con contraste brillante)" },
+                { val: "medium", label: "Contraste Medio (Transición armónica entre piel, cejas y cabello)" },
+                { val: "low", label: "Bajo Contraste / Suave (Tonos cercanos entre piel, ojos y cabello)" }
+            ],
+            faceOptions: [
+                { val: "oval", label: "Ovalado (Proporciones áureas equilibradas)" },
+                { val: "round", label: "Redondo (Ángulos suaves, ancho y largo similares)" },
+                { val: "square", label: "Cuadrado (Mandíbula y frente angulosas)" },
+                { val: "heart", label: "Triangular Invertido / Corazón (Frente amplia, mentón afilado)" },
+                { val: "oblong", label: "Alargado / Rectangular (Eje vertical predominante)" }
+            ],
+            footerDisclaimer: "Plataforma educativa de cosmetología, tricología y visagismo. La información técnica no sustituye la consulta médica dermatológica individualizada.",
+            footerEdition: "Edición Internacional"
+        },
+        fr: {
+            htmlLang: "fr",
+            badgeEdition: "Encyclopédie Clinique",
+            subtitle: "Cosmétologie Avancée, Trichologie & Visagisme",
+            btnPrint: "Exporter PDF",
+            nav1: "Diagnostic & Routine",
+            nav2: "Traité E-Book (6 Chapitres)",
+            nav3: "Actifs & Compatibilité",
+            nav4: "Trichologie & Calendrier",
+            nav5: "Visagisme & 12 Saisons",
+            heroKicker: "Plateforme Scientifique Multilingue • PT / EN / ES / FR",
+            heroTitle: "Science de la Peau, Trichologie Appliquée et Harmonie Esthétique",
+            heroDesc: "Un compendium numérique interactif conçu avec rigueur dermatologique et cosmétologique. Diagnostiquez votre profil cutané et capillaire, étudiez les 6 chapitres complets, vérifiez les synergies chimiques entre 16 actifs et découvrez votre palette saisonnière.",
+            statNum1: "6 Chapitres",
+            stat1: "Traité complet avec signets",
+            statNum2: "16 Actifs",
+            stat2: "Matrice chimique de pH et synergie",
+            stat3: "Photoprotection & mélanogenèse",
+            statNum4: "12 Saisons",
+            stat4: "Colorimétrie & visagisme facial",
+            m1Breadcrumb: "Module 01 • Consultation Clinique",
+            m1Title: "Moteur de Diagnostic Cutané & Capillaire",
+            m1Subtitle: "Sélectionnez les 5 paramètres cliniques ci-dessous pour générer une prescription cosmétologique détaillée avec ordre d'application, notes de pH et temps de pause.",
+            lblSkinType: "1. Biotype Cutané (Activité Sébacée)",
+            lblFitzpatrick: "2. Échelle de Fitzpatrick (Phototype I à VI)",
+            lblConcern: "3. Préoccupation Dermatologique Prioritaire",
+            lblSensitivity: "4. Réactivité de la Barrière Épidermique",
+            lblPorosity: "5. Porosité de la Tige Capillaire",
+            btnGenerateProtocol: "Générer le Protocole Clinique Complet",
+            skinOptions: [
+                { val: "oily", label: "Peau Lipidique (Grasse — brillance diffuse et pores dilatés)" },
+                { val: "combo", label: "Peau Mixte (Zone T grasse et joues normales/sèches)" },
+                { val: "dry", label: "Peau Alipidique (Sèche — déficit lipidique et tiraillements)" },
+                { val: "normal", label: "Peau Eudermique (Normale — équilibre hydrolipidique)" }
+            ],
+            fitzOptions: [
+                { val: "I-II", label: "Phototypes I–II (Peau très claire, brûle toujours, ne bronze jamais)" },
+                { val: "III-IV", label: "Phototypes III–IV (Peau mate claire à modérée, bronze progressivement)" },
+                { val: "V-VI", label: "Phototypes V–VI (Peau foncée à noire, mélanine élevée et risque d'HPI)" }
+            ],
+            concernOptions: [
+                { val: "acne", label: "Acné Comédonienne / Inflammatoire et Pores Obstrués" },
+                { val: "melasma", label: "Mélasma, Lentigos Solaires et Hyperpigmentation Post-Inflammatoire" },
+                { val: "aging", label: "Photovieillissement, Perte de Fermeté et Ridules" },
+                { val: "barrier", label: "Déshydratation Profonde, Rosacée Légère ou Barrière Altérée" }
+            ],
+            sensOptions: [
+                { val: "low", label: "Faible Sensibilité (Tolérante aux acides et rétinoïdes)" },
+                { val: "high", label: "Haute Sensibilité (Rougeurs faciles, picotements ou peau débutante)" }
+            ],
+            porosityOptions: [
+                { val: "low", label: "Porosité Faible (Cuticules très fermées, repousse l'eau)" },
+                { val: "medium", label: "Porosité Moyenne (Cuticules intègres, brillance équilibrée)" },
+                { val: "high", label: "Porosité Élevée (Cuticules ouvertes par chimie/chaleur, frisottis)" }
+            ],
+            morningTitle: "Protocole Matinal (Défense Antioxydante & Photoprotection)",
+            eveningTitle: "Protocole Nocturne (Renouvellement Cellulaire & Réparation Lamellaire)",
+            hairSummaryTitle: "Conduite Trichologique Intégrée",
+            stepLabel: "Étape",
+            m2Breadcrumb: "Module 02 • Ouvrage Complet",
+            m2Title: "Traité Numérique de Beauté Intégrale",
+            lblFontSize: "Texte :",
+            lblBookmark: "Marquer le Chapitre",
+            lblBookmarked: "Chapitre Marqué",
+            chapterPrefix: "Chapitre",
+            btnPrev: "← Chapitre Précédent",
+            btnNext: "Chapitre Suivant →",
+            m3Breadcrumb: "Module 03 • Chimie Cosmétique",
+            m3Title: "Encyclopédie de 16 Actifs & Matrice de Compatibilité",
+            m3Subtitle: "Vérifiez la sécurité d'association entre deux ingrédients actifs et explorez leurs concentrations cliniques et plages de pH optimales.",
+            checkerTitle: "Vérificateur Interactif d'Association Chimique",
+            lblActA: "Actif A (Premier Produit)",
+            lblActB: "Actif B (Second Produit)",
+            searchPlaceholder: "Rechercher un actif par nom, mécanisme ou indication...",
+            catAll: "Toutes les Classes (16 Actifs)",
+            catRet: "Rétinoïdes & Analogues",
+            catAcid: "Acides Exfoliants & Dépigmentants",
+            catAnti: "Antioxydants & Vasoprotecteurs",
+            catBar: "Réparation de Barrière & Peptides",
+            concRange: "Concentration Usuelle",
+            statusSafe: "ASSOCIATION SYNERGIQUE ET SÛRE",
+            statusCaution: "UTILISER AVEC PRÉCAUTION / ALTERNER",
+            statusConflict: "CONFLIT CHIMIQUE / RISQUE ÉLEVÉ D'IRRITATION",
+            m4Breadcrumb: "Module 04 • Thérapie Capillaire",
+            m4Title: "Trichologie & Générateur de Calendrier Capillaire (4 Semaines)",
+            m4Subtitle: "Évaluez la porosité cuticulaire et générez un calendrier de 12 soins équilibrant Hydratation, Nutrition Lipidique et Reconstruction Protéique.",
+            hairFormTitle: "Configurer la Thérapie Capillaire",
+            lblHairState: "Niveau de Porosité / Altération de la Fibre",
+            lblScalpType: "État du Cuir Chevelu",
+            porosityTestTitle: "Test Clinique d'Absorption et de Toucher",
+            porosityTestDesc: "Glissez les doigts de bas en haut sur une mèche propre et sèche : une surface lisse indique une faible porosité ; une légère résistance indique une porosité moyenne ; une rugosité indique une forte porosité (cuticules soulevées). L'acidification (pH 3,5–4,5) referme les liaisons salines.",
+            scalpOptions: [
+                { val: "balanced", label: "Cuir Chevelu Équilibré / Normal" },
+                { val: "oily", label: "Cuir Chevelu Gras / Tendance Séborrhéique" },
+                { val: "dry", label: "Cuir Chevelu Sec / Sensible" }
+            ],
+            washLabel: "Lavage",
+            m5Breadcrumb: "Module 05 • Harmonie & Optique",
+            m5Title: "Studio de Visagisme & Colorimétrie des 12 Saisons",
+            m5Subtitle: "Combinez température (sous-ton), intensité (chroma) et profondeur (valeur) pour identifier votre saison chromatique et votre géométrie faciale.",
+            visFormTitle: "Analyseur de Saison & Visage",
+            lblUndertone: "1. Température / Sous-ton de la Peau",
+            lblContrast: "2. Contraste Personnel (Peau x Cheveux x Yeux)",
+            lblFaceshape: "3. Géométrie Faciale Prédominante",
+            undertoneOptions: [
+                { val: "warm", label: "Chaud (Pigments dorés, pêche, veines verdâtres)" },
+                { val: "cool", label: "Froid (Pigments rosés, bleutés, veines violacées)" },
+                { val: "neutral_warm", label: "Neutre-Chaud / Olive Doré" },
+                { val: "neutral_cool", label: "Neutre-Froid / Olive Cendré" }
+            ],
+            contrastOptions: [
+                { val: "high", label: "Contraste Élevé (Peau claire avec cheveux foncés ou peau foncée contrastée)" },
+                { val: "medium", label: "Contraste Moyen (Transition harmonieuse entre peau, sourcils et cheveux)" },
+                { val: "low", label: "Faible Contraste / Doux (Valeurs proches entre peau, yeux et cheveux)" }
+            ],
+            faceOptions: [
+                { val: "oval", label: "Ovale (Proportions d'or équilibrées)" },
+                { val: "round", label: "Rond (Courbes douces, largeur et longueur similaires)" },
+                { val: "square", label: "Carré (Mâchoire et front anguleux)" },
+                { val: "heart", label: "Triangle Inversé / Cœur (Front large, menton affiné)" },
+                { val: "oblong", label: "Allongé / Rectangular (Axe vertical prédominant)" }
+            ],
+            footerDisclaimer: "Plateforme éducative de cosmétologie, trichologie et visagisme. Les informations techniques ne remplacent pas une consultation dermatologique médicale.",
+            footerEdition: "Édition Internationale"
         }
-    },
-    {
-        id: "tretinoin",
-        cat: "retinoid",
-        ph: "5.0 – 6.0",
-        conc: "0.025% – 0.1%",
-        name: { pt: "Tretinoína (Ácido Retinoico)", en: "Tretinoin (Retinoic Acid)", es: "Tretinoína (Ácido Retinoico)", fr: "Trétinoïne (Acide Rétinoïque)" },
-        mech: {
-            pt: "Forma biologicamente ativa direta. Padrão-ouro clínico para fotoenvelhecimento severo, remodelação dérmica e acne comedogênica.",
-            en: "Directly biologically active form. Clinical gold standard for severe photoaging, dermal remodeling, and comedogenic acne.",
-            es: "Forma biológicamente activa directa. Estándar de oro clínico para fotoenvejecimiento severo, remodelación dérmica y acné.",
-            fr: "Forme biologiquement active directe. Référence clinique pour le photovieillissement sévère, le remodelage dermique et l'acné."
-        }
-    },
-    {
-        id: "bakuchiol",
-        cat: "retinoid",
-        ph: "4.5 – 6.5",
-        conc: "0.5% – 1.0%",
-        name: { pt: "Bakuchiol (Fitoretinol)", en: "Bakuchiol (Phytoretinol)", es: "Bakuchiol (Fitorretinol)", fr: "Bakuchiol (Phytorétinol)" },
-        mech: {
-            pt: "Meroterpeno fenólico que modula expressão gênica semelhante ao retinol sem causar eritema ou descamação; fotoestável.",
-            en: "Phenolic meroterpene modulating retinol-like gene expression without erythema or peeling; photostable for daytime use.",
-            es: "Meroterpeno fenólico que modula expresión génica similar al retinol sin causar eritema ni descamación; fotoestable.",
-            fr: "Méroterpène phénolique modulant l'expression génique similaire au rétinol sans érythème ni desquamation ; photostable."
-        }
-    },
-    {
-        id: "vitc",
-        cat: "antioxidant",
-        ph: "2.5 – 3.5",
-        conc: "10% – 20%",
-        name: { pt: "Vitamina C (Ácido L-Ascórbico)", en: "Vitamin C (L-Ascorbic Acid)", es: "Vitamina C (Ácido L-Ascórbico)", fr: "Vitamine C (Acide L-Ascorbique)" },
-        mech: {
-            pt: "Neutraliza espécies reativas de oxigênio, inibe tirosinase e atua como cofator obrigatório das enzimas prolil e lisil-hidroxilase.",
-            en: "Neutralizes reactive oxygen species, inhibits tyrosinase, and acts as an obligate cofactor for prolyl and lysyl hydroxylase.",
-            es: "Neutraliza radicales libres, inhibe la tirosinasa y actúa como cofactor obligatorio de las enzimas prolil y lisil hidroxilasa.",
-            fr: "Neutralise les radicaux libres, inhibe la tyrosinase et agit comme cofacteur obligatoire des enzymes prolyl et lysyl hydroxylase."
-        }
-    },
-    {
-        id: "niacinamide",
-        cat: "barrier",
-        ph: "5.5 – 7.0",
-        conc: "4% – 10%",
-        name: { pt: "Niacinamida (Vitamina B3)", en: "Niacinamide (Vitamin B3)", es: "Niacinamida (Vitamina B3)", fr: "Niacinamide (Vitamine B3)" },
-        mech: {
-            pt: "Precursora de NAD+/NADP+. Aumenta síntese de ceramidas, inibe transferência de melanossomas em até 68% e regula sebo.",
-            en: "NAD+/NADP+ precursor. Boosts ceramide synthesis, inhibits melanosome transfer by up to 68%, and regulates sebum.",
-            es: "Precursora de NAD+/NADP+. Aumenta síntesis de ceramidas, inhibe transferencia de melanosomas y regula el sebo.",
-            fr: "Précurseur de NAD+/NADP+. Stimule la synthèse des céramides, inhibe le transfert des mélanosomes et régule le sébum."
-        }
-    },
-    {
-        id: "salicylic",
-        cat: "acid",
-        ph: "3.0 – 4.0",
-        conc: "0.5% – 2.0%",
-        name: { pt: "Ácido Salicílico (BHA)", en: "Salicylic Acid (BHA)", es: "Ácido Salicílico (BHA)", fr: "Acide Salicylique (BHA)" },
-        mech: {
-            pt: "Beta-hidroxiácido lipossolúvel; permeia o folículo pilossebáceo, dissolve tampões de queratina/sebo e exerce ação anti-inflamatória.",
-            en: "Lipid-soluble beta-hydroxy acid; permeates the pilosebaceous follicle, dissolves keratin/sebum plugs, and reduces inflammation.",
-            es: "Betahidroxiácido liposoluble; penetra en el folículo pilosebáceo, disuelve tapones de sebo y ejerce acción antiinflamatoria.",
-            fr: "Bêta-hydroxyacide liposoluble ; pénètre le follicule pilo-sébacé, dissout les bouchons de sébum et apaise l'inflammation."
-        }
-    },
-    {
-        id: "glycolic",
-        cat: "acid",
-        ph: "3.5 – 4.0",
-        conc: "5% – 10%",
-        name: { pt: "Ácido Glicólico (AHA)", en: "Glycolic Acid (AHA)", es: "Ácido Glicólico (AHA)", fr: "Acide Glycolique (AHA)" },
-        mech: {
-            pt: "Menor peso molecular entre os AHAs (76 Da). Quebra junções desmossômicas no estrato córneo e estimula glicosaminoglicanos dérmicos.",
-            en: "Lowest molecular weight among AHAs (76 Da). Cleaves desmosomal junctions in the stratum corneum and stimulates dermal GAGs.",
-            es: "Menor peso molecular entre los AHA (76 Da). Rompe uniones desmosómicas en el estrato córneo y estimula GAGs dérmicos.",
-            fr: "Plus faible poids moléculaire des AHA (76 Da). Rompt les jonctions desmosomales et stimule les glycosaminoglycanes dermiques."
-        }
-    },
-    {
-        id: "azelaic",
-        cat: "acid",
-        ph: "4.5 – 5.5",
-        conc: "10% – 20%",
-        name: { pt: "Ácido Azelaico", en: "Azelaic Acid", es: "Ácido Azelaico", fr: "Acide Azélaïque" },
-        mech: {
-            pt: "Ácido dicarboxílico antimicrobiano (Cutibacterium acnes), normalizador da queratinização e inibidor seletivo de melanócitos hiperativos.",
-            en: "Antimicrobial dicarboxylic acid (Cutibacterium acnes), normalizes keratinization, and selectively inhibits hyperactive melanocytes.",
-            es: "Ácido dicarboxílico antimicrobiano, normaliza la queratinización e inhibe selectivamente melanocitos hiperactivos.",
-            fr: "Acide dicarboxylique antimicrobien, normalise la kératinisation et inhibe sélectivement les mélanocytes hyperactifs."
-        }
-    },
-    {
-        id: "tranexamic",
-        cat: "acid",
-        ph: "5.0 – 6.5",
-        conc: "3% – 5%",
-        name: { pt: "Ácido Tranexâmico", en: "Tranexamic Acid", es: "Ácido Tranexámico", fr: "Acide Tranexamique" },
-        mech: {
-            pt: "Bloqueia a conversão de plasminogênio em plasmina nos queratinócitos induzida por UV, reduzindo mediadores melanogênicos e vasculares.",
-            en: "Blocks UV-induced plasminogen-to-plasmin conversion in keratinocytes, reducing melanogenic and vascular melasma triggers.",
-            es: "Bloquea la conversión de plasminógeno en plasmina inducida por UV, reduciendo mediadores melanogénicos y vasculares.",
-            fr: "Bloque la conversion du plasminogène en plasmine induite par les UV, réduisant les déclencheurs mélanogéniques et vasculaires."
-        }
-    },
-    {
-        id: "kojic",
-        cat: "acid",
-        ph: "4.0 – 5.5",
-        conc: "1% – 4%",
-        name: { pt: "Ácido Kójico", en: "Kojic Acid", es: "Ácido Kójico", fr: "Acide Kojique" },
-        mech: {
-            pt: "Quelante de íons cobre no sítio ativo da enzima tirosinase, bloqueando a oxidação da tirosina em L-DOPA.",
-            en: "Chelates copper ions at the active site of the tyrosinase enzyme, blocking tyrosine oxidation into L-DOPA.",
-            es: "Quelante de iones cobre en el sitio activo de la tirosinasa, bloqueando la oxidación de tirosina a L-DOPA.",
-            fr: "Chélateur des ions cuivre au site actif de la tyrosinase, bloquant l'oxydation de la tyrosine en L-DOPA."
-        }
-    },
-    {
-        id: "hyaluronic",
-        cat: "barrier",
-        ph: "5.0 – 6.5",
-        conc: "0.5% – 2.0%",
-        name: { pt: "Ácido Hialurônico Multipeso", en: "Multi-Weight Hyaluronic Acid", es: "Ácido Hialurónico Multipeso", fr: "Acide Hyaluronique Multi-Poids" },
-        mech: {
-            pt: "Glicosaminoglicano higroscópico capaz de reter até 1000x seu peso em água; frações de baixo peso sinalizam reparo epidérmico.",
-            en: "Hygroscopic glycosaminoglycan binding up to 1000x its weight in water; low-molecular fractions signal epidermal repair.",
-            es: "Glicosaminoglicano higroscópico que retiene hasta 1000 veces su peso en agua; fracciones de bajo peso señalizan reparación.",
-            fr: "Glycosaminoglycane hygroscopique retenant jusqu'à 1000 fois son poids en eau ; les fractions bas poids stimulent la réparation."
-        }
-    },
-    {
-        id: "ceramides",
-        cat: "barrier",
-        ph: "4.5 – 5.5",
-        conc: "1% – 3%",
-        name: { pt: "Ceramidas (NP, AP, EOP)", en: "Ceramides (NP, AP, EOP)", es: "Ceramidas (NP, AP, EOP)", fr: "Céramides (NP, AP, EOP)" },
-        mech: {
-            pt: "Esfingolipídios estruturais (50% da matriz intercelular córnea). Restauram a bicamada lamelar e reduzem a perda transepidérmica de água.",
-            en: "Structural sphingolipids (50% of stratum corneum lipid matrix). Restore lamellar bilayers and reduce transepidermal water loss.",
-            es: "Esfingolípidos estructurales (50% de la matriz lipídica). Restauran la bicapa lamelar y reducen la pérdida transepidérmica de agua.",
-            fr: "Sphingolipides structurels (50% de la matrice lipidique). Restaurent la bicouche lamellaire et limitent la perte insensible en eau."
-        }
-    },
-    {
-        id: "peptides",
-        cat: "barrier",
-        ph: "5.0 – 6.5",
-        conc: "2% – 10%",
-        name: { pt: "Peptídeos Biomiméticos (Matrixyl / Cobre)", en: "Biomimetic Peptides (Matrixyl / Copper)", es: "Péptidos Biomiméticos (Matrixyl / Cobre)", fr: "Peptides Biomimétiques (Matrixyl / Cuivre)" },
-        mech: {
-            pt: "Matriquinas sinalizadoras que estimulam fibroblastos a sintetizar colágeno, fibronectina e elastina sem alterar o pH cutâneo.",
-            en: "Signaling matrikines stimulating fibroblasts to synthesize collagen, fibronectin, and elastin without disrupting skin pH.",
-            es: "Matriquinas señalizadoras que estimulan fibroblastos para sintetizar colágeno, fibronectina y elastina sin alterar el pH.",
-            fr: "Matrikines signalétiques stimulant les fibroblastes à synthétiser collagène, fibronectine et élastine sans perturber le pH."
-        }
-    },
-    {
-        id: "centella",
-        cat: "barrier",
-        ph: "5.0 – 6.5",
-        conc: "1% – 5%",
-        name: { pt: "Centella Asiática (Madecassoside)", en: "Centella Asiatica (Madecassoside)", es: "Centella Asiática (Madecassoside)", fr: "Centella Asiatica (Madécassoside)" },
-        mech: {
-            pt: "Triterpenos pentacíclicos com potente ação anti-inflamatória, cicatrizante e estimuladora de colágeno tipo I em peles sensibilizadas.",
-            en: "Pentacyclic triterpenes with potent anti-inflammatory, wound-healing, and Type I collagen-stimulating action in sensitized skin.",
-            es: "Triterpenos pentacíclicos con potente acción antiinflamatoria, cicatrizante y estimuladora de colágeno tipo I.",
-            fr: "Triterpènes pentacycliques à forte action anti-inflammatoire, cicatrisante et stimulante du collagène de type I."
-        }
-    },
-    {
-        id: "panthenol",
-        cat: "barrier",
-        ph: "5.0 – 6.5",
-        conc: "2% – 5%",
-        name: { pt: "D-Pantenol (Pró-Vitamina B5)", en: "D-Panthenol (Pro-Vitamin B5)", es: "D-Pantenol (Provitamina B5)", fr: "D-Panthénol (Provitamine B5)" },
-        mech: {
-            pt: "Converte-se em ácido pantotênico (componente da Coenzima A), acelerando epitelização, hidratação profunda e alívio do eritema.",
-            en: "Converts to pantothenic acid (Coenzyme A component), accelerating epithelialization, deep hydration, and erythema relief.",
-            es: "Se convierte en ácido pantoténico (Coenzima A), acelerando la epitelización, hidratación profunda y alivio del eritema.",
-            fr: "Se convertit en acide pantothénique (Coenzyme A), accélérant l'épithélialisation, l'hydratation profonde et l'apaisement."
-        }
-    },
-    {
-        id: "caffeine",
-        cat: "antioxidant",
-        ph: "4.5 – 6.0",
-        conc: "1% – 5%",
-        name: { pt: "Cafeína Anidra", en: "Anhydrous Caffeine", es: "Cafeína Anhidra", fr: "Caféine Anhydre" },
-        mech: {
-            pt: "Metilxantina vasoconstritora e inibidora da fosfodiesterase; reduz edema periorbital, estresse oxidativo UV e estimula microcirculação.",
-            en: "Vasoconstrictive methylxanthine and phosphodiesterase inhibitor; reduces periorbital edema, UV oxidative stress, and boosts microcirculation.",
-            es: "Metilxantina vasoconstrictora e inhibidora de fosfodiesterasa; reduce edema periorbital y estrés oxidativo UV.",
-            fr: "Méthylxanthine vasoconstrictrice et inhibitrice de la phosphodiestérase ; réduit l'œdème périorbitaire et le stress oxydatif UV."
-        }
-    }
-];
+    };
 
-// ============================================================================
-// 6-CHAPTER COMPLETE E-BOOK DATA (MULTILINGUAL)
-// ============================================================================
-const EBOOK_CHAPTERS = [
-    {
-        num: "01",
-        title: {
-            pt: "Anatomia Cutânea & Função Barreira",
-            en: "Cutaneous Anatomy & Barrier Function",
-            es: "Anatomía Cutánea y Función Barrera",
-            fr: "Anatomie Cutanée & Fonction Barrière"
+    // ============================================================================
+    // 2. 16 ACTIVE INGREDIENTS DATABASE (PT, EN, ES, FR)
+    // ============================================================================
+    const ACTIVES_DB = [
+        {
+            id: "retinol", cat: "retinoid", ph: "5.5 – 6.5", conc: "0.05% – 0.3%",
+            name: { pt: "Retinol", en: "Retinol", es: "Retinol", fr: "Rétinol" },
+            mech: {
+                pt: "Precursor do ácido retinoico; liga-se a receptores nucleares RAR/RXR, acelerando mitose basal e síntese de colágeno tipo I e III.",
+                en: "Retinoic acid precursor; binds to RAR/RXR nuclear receptors, accelerating basal mitosis and Type I & III collagen synthesis.",
+                es: "Precursor del ácido retinoico; se une a receptores nucleares RAR/RXR acelerando la mitosis basal y síntesis de colágeno I y III.",
+                fr: "Précurseur de l'acide rétinoïque ; se lie aux récepteurs nucléaires RAR/RXR accélérant la mitose basale et la synthèse de collagène."
+            }
         },
-        content: {
-            pt: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">1.1 Arquitetura Histológica da Pele</h3>
-                <p>A pele constitui uma interface neuro-imuno-endócrina dinâmica composta por três compartimentos principais: <strong>epiderme</strong> (epitélio estratificado pavimentoso queratinizado), <strong>derme</strong> (matriz extracelular vascularizada) e <strong>hipoderme</strong> (panículo adiposo estrutural).</p>
-                <p>No estrato córneo, corneócitos anucleados ricos em filagrina organizam-se sob o modelo de <em>tijolos e argamassa</em>. A matriz lipídica intercelular exige uma proporção molar fisiológica de <strong>3:1:1 entre ceramidas, colesterol livre e ácidos graxos livres</strong>. Quando detergentes alcalinos removem essa fração lipídica, ocorre aumento imediato da Perda Transepidérmica de Água (TEWL) e ativação de citocinas pró-inflamatórias (IL-1α).</p>
-                <div class="p-4 rounded-xl bg-alabaster border-l-4 border-rosegold-600 text-sm">
-                    <strong>Manto Ácido e Microbioma:</strong> O pH fisiológico superficial (4,5 a 5,5) otimiza a atividade das enzimas β-glucocerebrosidase e esfingomielinase ácida, responsáveis pela maturação das ceramidas, além de favorecer bactérias comensais como <em>Staphylococcus epidermidis</em>.
-                </div>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">1.2 Melanogênese e Escala de Fitzpatrick</h3>
-                <p>Os melanócitos basais transferem melanossomas para aproximadamente 36 queratinócitos vizinhos (unidade epidérmico-melânica). Fototipos altos (IV a VI) possuem melanossomas maiores, mais dispersos e com maior razão eumelanina/feomelanina, conferindo proteção natural contra eritema solar, porém apresentando maior labilidade inflamatória e risco de hiperpigmentação pós-inflamatória (HPI).</p>
-            `,
-            en: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">1.1 Histological Architecture of the Skin</h3>
-                <p>The skin constitutes a dynamic neuro-immuno-endocrine interface composed of three primary compartments: <strong>epidermis</strong> (keratinized stratified squamous epithelium), <strong>dermis</strong> (vascularized extracellular matrix), and <strong>hypodermis</strong> (structural adipose tissue).</p>
-                <p>Within the stratum corneum, filaggrin-rich corneocytes are arranged in a <em>brick-and-mortar</em> architecture. The intercellular lipid matrix requires a physiological molar ratio of <strong>3:1:1 between ceramides, free cholesterol, and free fatty acids</strong>. Alkaline cleansers strip this lamellar fraction, spiking Transepidermal Water Loss (TEWL) and triggering IL-1α inflammatory cascades.</p>
-                <div class="p-4 rounded-xl bg-alabaster border-l-4 border-rosegold-600 text-sm">
-                    <strong>Acid Mantle & Microbiome:</strong> Surface physiological pH (4.5 to 5.5) optimizes β-glucocerebrosidase and acid sphingomyelinase enzymes required for ceramide processing while supporting commensal flora such as <em>Staphylococcus epidermidis</em>.
-                </div>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">1.2 Melanogenesis & Fitzpatrick Scale</h3>
-                <p>Basal melanocytes transfer melanosomes to roughly 36 neighboring keratinocytes (epidermal-melanin unit). Higher phototypes (IV–VI) feature larger, individually dispersed melanosomes rich in eumelanin, providing superior UV protection alongside heightened sensitivity to post-inflammatory hyperpigmentation (PIH).</p>
-            `,
-            es: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">1.1 Arquitectura Histológica de la Piel</h3>
-                <p>La piel constituye una interfaz neuro-inmuno-endocrina dinámica compuesta por tres compartimentos: <strong>epidermis</strong>, <strong>dermis</strong> e <strong>hipodermis</strong>.</p>
-                <p>En el estrato córneo, los corneocitos se organizan bajo el modelo de <em>ladrillos y mortero</em>. La matriz lipídica intercelular requiere una proporción molar fisiológica de <strong>3:1:1 entre ceramidas, colesterol libre y ácidos grasos libres</strong>. Los limpiadores alcalinos disuelven esta barrera, elevando la pérdida transepidérmica de agua (TEWL).</p>
-                <div class="p-4 rounded-xl bg-alabaster border-l-4 border-rosegold-600 text-sm">
-                    <strong>Manto Ácido y Microbioma:</strong> El pH fisiológico superficial (4,5 a 5,5) optimiza las enzimas que sintetizan ceramidas y protege la flora comensal beneficiosa.
-                </div>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">1.2 Melanogénesis y Escala de Fitzpatrick</h3>
-                <p>Los fototipos altos (IV a VI) presentan melanosomas más grandes y ricos en eumelanina, ofreciendo mayor fotoprotección natural pero mayor predisposición a hiperpigmentación postinflamatoria (HPI) ante agresiones químicas o térmicas.</p>
-            `,
-            fr: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">1.1 Architecture Histologique de la Peau</h3>
-                <p>La peau constitue une interface neuro-immuno-endocrinienne dynamique composée de trois compartiments : <strong>l'épiderme</strong>, le <strong>derme</strong> et <strong>l'hypoderme</strong>.</p>
-                <p>Dans la couche cornée, les cornéocytes s'organisent selon le modèle <em>briques et mortier</em>. La matrice lipidique intercellulaire exige un ratio molaire physiologique de <strong>3:1:1 entre céramides, cholestérol libre et acides gras libres</strong>.</p>
-                <div class="p-4 rounded-xl bg-alabaster border-l-4 border-rosegold-600 text-sm">
-                    <strong>Manteau Acide et Microbiome :</strong> Le pH physiologique de surface (4,5 à 5,5) optimise les enzymes de maturation des céramides et soutient la flore commensale protectrice.
-                </div>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">1.2 Mélanogenèse et Échelle de Fitzpatrick</h3>
-                <p>Les phototypes élevés (IV à VI) possèdent des mélanosomes plus volumineux riches en eumélanine, offrant une photoprotection naturelle supérieure mais une réactivité accrue face à l'hyperpigmentation post-inflammatoire (HPI).</p>
-            `
+        {
+            id: "tretinoin", cat: "retinoid", ph: "5.0 – 6.0", conc: "0.025% – 0.1%",
+            name: { pt: "Tretinoína (Ácido Retinoico)", en: "Tretinoin (Retinoic Acid)", es: "Tretinoína (Ácido Retinoico)", fr: "Trétinoïne (Acide Rétinoïque)" },
+            mech: {
+                pt: "Forma biologicamente ativa direta. Padrão-ouro clínico para fotoenvelhecimento severo, remodelação dérmica e acne comedogênica.",
+                en: "Directly biologically active form. Clinical gold standard for severe photoaging, dermal remodeling, and comedogenic acne.",
+                es: "Forma biológicamente activa directa. Estándar de oro clínico para fotoenvejecimiento severo, remodelación dérmica y acné.",
+                fr: "Forme biologiquement active directe. Référence clinique pour le photovieillissement sévère, le remodelage dermique et l'acné."
+            }
+        },
+        {
+            id: "bakuchiol", cat: "retinoid", ph: "4.5 – 6.5", conc: "0.5% – 1.0%",
+            name: { pt: "Bakuchiol (Fitoretinol)", en: "Bakuchiol (Phytoretinol)", es: "Bakuchiol (Fitorretinol)", fr: "Bakuchiol (Phytorétinol)" },
+            mech: {
+                pt: "Meroterpeno fenólico que modula expressão gênica semelhante ao retinol sem causar eritema ou descamação; fotoestável.",
+                en: "Phenolic meroterpene modulating retinol-like gene expression without erythema or peeling; photostable for daytime use.",
+                es: "Meroterpeno fenólico que modula expresión génica similar al retinol sin causar eritema ni descamación; fotoestable.",
+                fr: "Méroterpène phénolique modulant l'expression génique similaire au rétinol sans érythème ni desquamation ; photostable."
+            }
+        },
+        {
+            id: "vitc", cat: "antioxidant", ph: "2.5 – 3.5", conc: "10% – 20%",
+            name: { pt: "Vitamina C (Ácido L-Ascórbico)", en: "Vitamin C (L-Ascorbic Acid)", es: "Vitamina C (Ácido L-Ascórbico)", fr: "Vitamine C (Acide L-Ascorbique)" },
+            mech: {
+                pt: "Neutraliza espécies reativas de oxigênio, inibe tirosinase e atua como cofator obrigatório das enzimas prolil e lisil-hidroxilase.",
+                en: "Neutralizes reactive oxygen species, inhibits tyrosinase, and acts as an obligate cofactor for prolyl and lysyl hydroxylase.",
+                es: "Neutraliza radicales libres, inhibe la tirosinasa y actúa como cofactor obligatorio de las enzimas prolil y lisil hidroxilasa.",
+                fr: "Neutralise les radicaux libres, inhibe la tyrosinase et agit comme cofacteur obligatoire des enzymes prolyl et lysyl hydroxylase."
+            }
+        },
+        {
+            id: "niacinamide", cat: "barrier", ph: "5.5 – 7.0", conc: "4% – 10%",
+            name: { pt: "Niacinamida (Vitamina B3)", en: "Niacinamide (Vitamin B3)", es: "Niacinamida (Vitamina B3)", fr: "Niacinamide (Vitamine B3)" },
+            mech: {
+                pt: "Precursora de NAD+/NADP+. Aumenta síntese de ceramidas, inibe transferência de melanossomas em até 68% e regula sebo.",
+                en: "NAD+/NADP+ precursor. Boosts ceramide synthesis, inhibits melanosome transfer by up to 68%, and regulates sebum.",
+                es: "Precursora de NAD+/NADP+. Aumenta síntesis de ceramidas, inhibe transferencia de melanosomas y regula el sebo.",
+                fr: "Précurseur de NAD+/NADP+. Stimule la synthèse des céramides, inhibe le transfert des mélanosomes et régule le sébum."
+            }
+        },
+        {
+            id: "salicylic", cat: "acid", ph: "3.0 – 4.0", conc: "0.5% – 2.0%",
+            name: { pt: "Ácido Salicílico (BHA)", en: "Salicylic Acid (BHA)", es: "Ácido Salicílico (BHA)", fr: "Acide Salicylique (BHA)" },
+            mech: {
+                pt: "Beta-hidroxiácido lipossolúvel; permeia o folículo pilossebáceo, dissolve tampões de queratina/sebo e exerce ação anti-inflamatória.",
+                en: "Lipid-soluble beta-hydroxy acid; permeates the pilosebaceous follicle, dissolves keratin/sebum plugs, and reduces inflammation.",
+                es: "Betahidroxiácido liposoluble; penetra en el folículo pilosebáceo, disuelve tapones de sebo y ejerce acción antiinflamatoria.",
+                fr: "Bêta-hydroxyacide liposoluble ; pénètre le follicule pilo-sébacé, dissout les bouchons de sébum et apaise l'inflammation."
+            }
+        },
+        {
+            id: "glycolic", cat: "acid", ph: "3.5 – 4.0", conc: "5% – 10%",
+            name: { pt: "Ácido Glicólico (AHA)", en: "Glycolic Acid (AHA)", es: "Ácido Glicólico (AHA)", fr: "Acide Glycolique (AHA)" },
+            mech: {
+                pt: "Menor peso molecular entre os AHAs (76 Da). Quebra junções desmossômicas no estrato córneo e estimula glicosaminoglicanos dérmicos.",
+                en: "Lowest molecular weight among AHAs (76 Da). Cleaves desmosomal junctions in the stratum corneum and stimulates dermal GAGs.",
+                es: "Menor peso molecular entre los AHA (76 Da). Rompe uniones desmosómicas en el estrato córneo y estimula GAGs dérmicos.",
+                fr: "Plus faible poids moléculaire des AHA (76 Da). Rompt les jonctions desmosomales et stimule les glycosaminoglycanes dermiques."
+            }
+        },
+        {
+            id: "azelaic", cat: "acid", ph: "4.5 – 5.5", conc: "10% – 20%",
+            name: { pt: "Ácido Azelaico", en: "Azelaic Acid", es: "Ácido Azelaico", fr: "Acide Azélaïque" },
+            mech: {
+                pt: "Ácido dicarboxílico antimicrobiano (Cutibacterium acnes), normalizador da queratinização e inibidor seletivo de melanócitos hiperativos.",
+                en: "Antimicrobial dicarboxylic acid (Cutibacterium acnes), normalizes keratinization, and selectively inhibits hyperactive melanocytes.",
+                es: "Ácido dicarboxílico antimicrobiano, normaliza la queratinización e inhibe selectivamente melanocitos hiperactivos.",
+                fr: "Acide dicarboxylique antimicrobien, normalise la kératinisation et inhibe sélectivement les mélanocytes hyperactifs."
+            }
+        },
+        {
+            id: "tranexamic", cat: "acid", ph: "5.0 – 6.5", conc: "3% – 5%",
+            name: { pt: "Ácido Tranexâmico", en: "Tranexamic Acid", es: "Ácido Tranexámico", fr: "Acide Tranexamique" },
+            mech: {
+                pt: "Bloqueia a conversão de plasminogênio em plasmina nos queratinócitos induzida por UV, reduzindo mediadores melanogênicos e vasculares.",
+                en: "Blocks UV-induced plasminogen-to-plasmin conversion in keratinocytes, reducing melanogenic and vascular melasma triggers.",
+                es: "Bloquea la conversión de plasminógeno en plasmina inducida por UV, reduciendo mediadores melanogénicos y vasculares.",
+                fr: "Bloque la conversion du plasminogène en plasmine induite par les UV, réduisant les déclencheurs mélanogéniques et vasculaires."
+            }
+        },
+        {
+            id: "kojic", cat: "acid", ph: "4.0 – 5.5", conc: "1% – 4%",
+            name: { pt: "Ácido Kójico", en: "Kojic Acid", es: "Ácido Kójico", fr: "Acide Kojique" },
+            mech: {
+                pt: "Quelante de íons cobre no sítio ativo da enzima tirosinase, bloqueando a oxidação da tirosina em L-DOPA.",
+                en: "Chelates copper ions at the active site of the tyrosinase enzyme, blocking tyrosine oxidation into L-DOPA.",
+                es: "Quelante de iones cobre en el sitio activo de la tirosinasa, bloqueando la oxidación de tirosina a L-DOPA.",
+                fr: "Chélateur des ions cuivre au site actif de la tyrosinase, bloquant l'oxydation de la tyrosine en L-DOPA."
+            }
+        },
+        {
+            id: "hyaluronic", cat: "barrier", ph: "5.0 – 6.5", conc: "0.5% – 2.0%",
+            name: { pt: "Ácido Hialurônico Multipeso", en: "Multi-Weight Hyaluronic Acid", es: "Ácido Hialurónico Multipeso", fr: "Acide Hyaluronique Multi-Poids" },
+            mech: {
+                pt: "Glicosaminoglicano higroscópico capaz de reter até 1000x seu peso em água; frações de baixo peso sinalizam reparo epidérmico.",
+                en: "Hygroscopic glycosaminoglycan binding up to 1000x its weight in water; low-molecular fractions signal epidermal repair.",
+                es: "Glicosaminoglicano higroscópico que retiene hasta 1000 veces su peso en agua; fracciones de bajo peso señalizan reparación.",
+                fr: "Glycosaminoglycane hygroscopique retenant jusqu'à 1000 fois son poids en eau ; les fractions bas poids stimulent la réparation."
+            }
+        },
+        {
+            id: "ceramides", cat: "barrier", ph: "4.5 – 5.5", conc: "1% – 3%",
+            name: { pt: "Ceramidas (NP, AP, EOP)", en: "Ceramides (NP, AP, EOP)", es: "Ceramidas (NP, AP, EOP)", fr: "Céramides (NP, AP, EOP)" },
+            mech: {
+                pt: "Esfingolipídios estruturais (50% da matriz intercelular córnea). Restauram a bicamada lamelar e reduzem a perda transepidérmica de água.",
+                en: "Structural sphingolipids (50% of stratum corneum lipid matrix). Restore lamellar bilayers and reduce transepidermal water loss.",
+                es: "Esfingolípidos estructurales (50% de la matriz lipídica). Restauran la bicapa lamelar y reducen la pérdida transepidérmica de agua.",
+                fr: "Sphingolipides structurels (50% de la matrice lipidique). Restaurent la bicouche lamellaire et limitent la perte insensible en eau."
+            }
+        },
+        {
+            id: "peptides", cat: "barrier", ph: "5.0 – 6.5", conc: "2% – 10%",
+            name: { pt: "Peptídeos Biomiméticos (Matrixyl / Cobre)", en: "Biomimetic Peptides (Matrixyl / Copper)", es: "Péptidos Biomiméticos (Matrixyl / Cobre)", fr: "Peptides Biomimétiques (Matrixyl / Cuivre)" },
+            mech: {
+                pt: "Matriquinas sinalizadoras que estimulam fibroblastos a sintetizar colágeno, fibronectina e elastina sem alterar o pH cutâneo.",
+                en: "Signaling matrikines stimulating fibroblasts to synthesize collagen, fibronectin, and elastin without disrupting skin pH.",
+                es: "Matriquinas señalizadoras que estimulan fibroblastos para sintetizar colágeno, fibronectina y elastina sin alterar el pH.",
+                fr: "Matrikines signalétiques stimulant les fibroblastes à synthétiser collagène, fibronectine et élastine sans perturber le pH."
+            }
+        },
+        {
+            id: "centella", cat: "barrier", ph: "5.0 – 6.5", conc: "1% – 5%",
+            name: { pt: "Centella Asiática (Madecassoside)", en: "Centella Asiatica (Madecassoside)", es: "Centella Asiática (Madecassoside)", fr: "Centella Asiatica (Madécassoside)" },
+            mech: {
+                pt: "Triterpenos pentacíclicos com potente ação anti-inflamatória, cicatrizante e estimuladora de colágeno tipo I em peles sensibilizadas.",
+                en: "Pentacyclic triterpenes with potent anti-inflammatory, wound-healing, and Type I collagen-stimulating action in sensitized skin.",
+                es: "Triterpenos pentacíclicos con potente acción antiinflamatoria, cicatrizante y estimuladora de colágeno tipo I.",
+                fr: "Triterpènes pentacycliques à forte action anti-inflammatoire, cicatrisante et stimulante du collagène de type I."
+            }
+        },
+        {
+            id: "panthenol", cat: "barrier", ph: "5.0 – 6.5", conc: "2% – 5%",
+            name: { pt: "D-Pantenol (Pró-Vitamina B5)", en: "D-Panthenol (Pro-Vitamin B5)", es: "D-Pantenol (Provitamina B5)", fr: "D-Panthénol (Provitamine B5)" },
+            mech: {
+                pt: "Converte-se em ácido pantotênico (componente da Coenzima A), acelerando epitelização, hidratação profunda e alívio do eritema.",
+                en: "Converts to pantothenic acid (Coenzyme A component), accelerating epithelialization, deep hydration, and erythema relief.",
+                es: "Se convierte en ácido pantoténico (Coenzima A), acelerando la epitelización, hidratación profunda y alivio del eritema.",
+                fr: "Se convertit en acide pantothénique (Coenzyme A), accélérant l'épithélialisation, l'hydratation profonde et l'apaisement."
+            }
+        },
+        {
+            id: "caffeine", cat: "antioxidant", ph: "4.5 – 6.0", conc: "1% – 5%",
+            name: { pt: "Cafeína Anidra", en: "Anhydrous Caffeine", es: "Cafeína Anhidra", fr: "Caféine Anhydre" },
+            mech: {
+                pt: "Metilxantina vasoconstritora e inibidora da fosfodiesterase; reduz edema periorbital, estresse oxidativo UV e estimula microcirculação.",
+                en: "Vasoconstrictive methylxanthine and phosphodiesterase inhibitor; reduces periorbital edema, UV oxidative stress, and boosts microcirculation.",
+                es: "Metilxantina vasoconstrictora e inhibidora de fosfodiesterasa; reduce edema periorbital y estrés oxidativo UV.",
+                fr: "Méthylxanthine vasoconstrictrice et inhibitrice de la phosphodiestérase ; réduit l'œdème périorbitaire et le stress oxydatif UV."
+            }
         }
-    },
-    {
-        num: "02",
-        title: {
-            pt: "Química Cosmética, pH & Permeação",
-            en: "Cosmetic Chemistry, pH & Permeation",
-            es: "Química Cosmética, pH y Permeación",
-            fr: "Chimie Cosmétique, pH & Perméation"
+    ];
+
+    // ============================================================================
+    // 3. 6-CHAPTER COMPLETE E-BOOK DATA (PT, EN, ES, FR)
+    // ============================================================================
+    const EBOOK_CHAPTERS = [
+        {
+            num: "01",
+            title: {
+                pt: "Anatomia Cutânea & Função Barreira",
+                en: "Cutaneous Anatomy & Barrier Function",
+                es: "Anatomía Cutánea y Función Barrera",
+                fr: "Anatomie Cutanée & Fonction Barrière"
+            },
+            content: {
+                pt: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">1.1 Arquitetura Histológica da Pele</h3>
+                    <p>A pele constitui uma interface neuro-imuno-endócrina dinâmica composta por três compartimentos principais: <strong>epiderme</strong> (epitélio estratificado pavimentoso queratinizado), <strong>derme</strong> (matriz extracelular vascularizada) e <strong>hipoderme</strong> (panículo adiposo estrutural).</p>
+                    <p>No estrato córneo, corneócitos anucleados ricos em filagrina organizam-se sob o modelo de <em>tijolos e argamassa</em>. A matriz lipídica intercelular exige uma proporção molar fisiológica de <strong>3:1:1 entre ceramidas, colesterol livre e ácidos graxos livres</strong>. Quando detergentes alcalinos removem essa fração lipídica, ocorre aumento imediato da Perda Transepidérmica de Água (TEWL) e ativação de citocinas pró-inflamatórias (IL-1α).</p>
+                    <div class="p-4 rounded-xl bg-alabaster border-l-4 border-sage-600 text-sm">
+                        <strong>Manto Ácido e Microbioma:</strong> O pH fisiológico superficial (4,5 a 5,5) otimiza a atividade das enzimas β-glucocerebrosidase e esfingomielinase ácida, responsáveis pela maturação das ceramidas, além de favorecer bactérias comensais como <em>Staphylococcus epidermidis</em>.
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">1.2 Melanogênese e Escala de Fitzpatrick</h3>
+                    <p>Os melanócitos basais transferem melanossomas para aproximadamente 36 queratinócitos vizinhos (unidade epidérmico-melânica). Fototipos altos (IV a VI) possuem melanossomas maiores, mais dispersos e com maior razão eumelanina/feomelanina, conferindo proteção natural contra eritema solar, porém apresentando maior labilidade inflamatória e risco de hiperpigmentação pós-inflamatória (HPI).</p>
+                `,
+                en: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">1.1 Histological Architecture of the Skin</h3>
+                    <p>The skin constitutes a dynamic neuro-immuno-endocrine interface composed of three primary compartments: <strong>epidermis</strong> (keratinized stratified squamous epithelium), <strong>dermis</strong> (vascularized extracellular matrix), and <strong>hypodermis</strong> (structural adipose tissue).</p>
+                    <p>Within the stratum corneum, filaggrin-rich corneocytes are arranged in a <em>brick-and-mortar</em> architecture. The intercellular lipid matrix requires a physiological molar ratio of <strong>3:1:1 between ceramides, free cholesterol, and free fatty acids</strong>. Alkaline cleansers strip this lamellar fraction, spiking Transepidermal Water Loss (TEWL) and triggering IL-1α inflammatory cascades.</p>
+                    <div class="p-4 rounded-xl bg-alabaster border-l-4 border-sage-600 text-sm">
+                        <strong>Acid Mantle & Microbiome:</strong> Surface physiological pH (4.5 to 5.5) optimizes β-glucocerebrosidase and acid sphingomyelinase enzymes required for ceramide processing while supporting commensal flora such as <em>Staphylococcus epidermidis</em>.
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">1.2 Melanogenesis & Fitzpatrick Scale</h3>
+                    <p>Basal melanocytes transfer melanosomes to roughly 36 neighboring keratinocytes (epidermal-melanin unit). Higher phototypes (IV–VI) feature larger, individually dispersed melanosomes rich in eumelanin, providing superior UV protection alongside heightened sensitivity to post-inflammatory hyperpigmentation (PIH).</p>
+                `,
+                es: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">1.1 Arquitectura Histológica de la Piel</h3>
+                    <p>La piel constituye una interfaz neuro-inmuno-endocrina dinámica compuesta por tres compartimentos: <strong>epidermis</strong>, <strong>dermis</strong> e <strong>hipodermis</strong>.</p>
+                    <p>En el estrato córneo, los corneocitos se organizan bajo el modelo de <em>ladrillos y mortero</em>. La matriz lipídica intercelular requiere una proporción molar fisiológica de <strong>3:1:1 entre ceramidas, colesterol libre y ácidos grasos libres</strong>. Los limpiadores alcalinos disuelven esta barrera, elevando la pérdida transepidérmica de agua (TEWL).</p>
+                    <div class="p-4 rounded-xl bg-alabaster border-l-4 border-sage-600 text-sm">
+                        <strong>Manto Ácido y Microbioma:</strong> El pH fisiológico superficial (4,5 a 5,5) optimiza las enzimas que sintetizan ceramidas y protege la flora comensal beneficiosa.
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">1.2 Melanogénesis y Escala de Fitzpatrick</h3>
+                    <p>Los fototipos altos (IV a VI) presentan melanosomas más grandes y ricos en eumelanina, ofreciendo mayor fotoprotección natural pero mayor predisposición a hiperpigmentación postinflamatoria (HPI) ante agresiones químicas o térmicas.</p>
+                `,
+                fr: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">1.1 Architecture Histologique de la Peau</h3>
+                    <p>La peau constitue une interface neuro-immuno-endocrinienne dynamique composée de trois compartiments : <strong>l'épiderme</strong>, le <strong>derme</strong> et <strong>l'hypoderme</strong>.</p>
+                    <p>Dans la couche cornée, les cornéocytes s'organisent selon le modèle <em>briques et mortier</em>. La matrice lipidique intercellulaire exige un ratio molaire physiologique de <strong>3:1:1 entre céramides, cholestérol libre et acides gras libres</strong>.</p>
+                    <div class="p-4 rounded-xl bg-alabaster border-l-4 border-sage-600 text-sm">
+                        <strong>Manteau Acide et Microbiome :</strong> Le pH physiologique de surface (4,5 à 5,5) optimise les enzymes de maturation des céramides et soutient la flore commensale protectrice.
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">1.2 Mélanogenèse et Échelle de Fitzpatrick</h3>
+                    <p>Les phototypes élevés (IV à VI) possèdent des mélanosomes plus volumineux riches en eumélanine, offrant une photoprotection naturelle supérieure mais une réactivité accrue face à l'hyperpigmentation post-inflammatoire (HPI).</p>
+                `
+            }
         },
-        content: {
-            pt: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">2.1 Biodisponibilidade e Lei de Fick</h3>
-                <p>Para exercer atividade biológica, um ativo tópico deve atravessar o estrato córneo lipofílico. Segundo a <strong>Regra dos 500 Daltons</strong>, moléculas com peso molecular inferior a 500 Da e coeficiente de partição óleo/água equilibrado (LogP entre 1 e 3) apresentam permeação passiva superior.</p>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">2.2 Influência do pH e pKa nos Ácidos</h3>
-                <p>A eficácia de alfa e beta-hidroxiácidos depende da fração ácida livre não ionizada, governada pela equação de Henderson-Hasselbalch. Quando o pH da fórmula aproxima-se do <strong>pKa do ácido</strong> (ex.: pKa 3,83 para o ácido glicólico), 50% das moléculas permanecem na forma neutra biodisponível.</p>
-                <div class="p-4 rounded-xl bg-sage-50 border-l-4 border-sage-600 text-sm">
-                    <strong>Ordem Farmacotécnica de Camadas:</strong> Aplique sempre da menor para a maior viscosidade (soluções aquosas → séruns fluidos → géis → emulsões → óleos/oclusivos). Veículos oclusivos aplicados precocemente bloqueiam a difusão de ativos hidrossolúveis.
-                </div>
-            `,
-            en: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">2.1 Bioavailability & Fick's Law</h3>
-                <p>To exert biological activity, a topical ingredient must traverse the lipophilic stratum corneum. According to the <strong>500 Dalton Rule</strong>, molecules below 500 Da with a balanced oil/water partition coefficient (LogP 1–3) achieve optimal passive diffusion.</p>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">2.2 Influence of pH & pKa on Acids</h3>
-                <p>The efficacy of AHAs and BHAs depends on the unionized free acid fraction governed by the Henderson-Hasselbalch equation. When formulation pH matches the acid's <strong>pKa</strong> (e.g., pKa 3.83 for glycolic acid), 50% of molecules remain in their bioavailable neutral state.</p>
-                <div class="p-4 rounded-xl bg-sage-50 border-l-4 border-sage-600 text-sm">
-                    <strong>Galenic Layering Order:</strong> Always layer from lowest to highest viscosity (aqueous toners → fluid serums → gels → emulsions → oils/occlusives). Premature occlusives block water-soluble penetration.
-                </div>
-            `,
-            es: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">2.1 Biodisponibilidad y Ley de Fick</h3>
-                <p>Según la <strong>Regla de los 500 Daltons</strong>, las moléculas con peso molecular inferior a 500 Da y coeficiente de partición equilibrado logran una difusión pasiva óptima a través del estrato córneo.</p>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">2.2 Influencia del pH y pKa</h3>
-                <p>La eficacia de los hidroxiácidos depende de la fracción ácida libre no ionizada. Cuando el pH de la fórmula iguala el <strong>pKa del ácido</strong>, el 50% de las moléculas permanecen biodisponibles.</p>
-                <div class="p-4 rounded-xl bg-sage-50 border-l-4 border-sage-600 text-sm">
-                    <strong>Orden Galénico de Aplicación:</strong> Aplique siempre de menor a mayor viscosidad (tónicos acuosos → sueros fluidos → geles → emulsiones → aceites/oclusivos).
-                </div>
-            `,
-            fr: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">2.1 Biodisponibilité et Loi de Fick</h3>
-                <p>Selon la <strong>Règle des 500 Daltons</strong>, les molécules de poids moléculaire inférieur à 500 Da avec un coefficient de partage équilibré pénètrent efficacement la couche cornée.</p>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">2.2 Influence du pH et du pKa</h3>
-                <p>L'efficacité des acides exfoliants dépend de la fraction acide libre non ionisée. Lorsque le pH de la formule égale le <strong>pKa de l'acide</strong>, 50% des molécules restent biodisponibles.</p>
-                <div class="p-4 rounded-xl bg-sage-50 border-l-4 border-sage-600 text-sm">
-                    <strong>Ordre Galénique des Couches :</strong> Appliquez toujours de la texture la plus fluide à la plus riche (lotions aqueuses → sérums → gels → émulsions → huiles/occlusifs).
-                </div>
-            `
-        }
-    },
-    {
-        num: "03",
-        title: {
-            pt: "Skincare Avançado & Ciclo de Renovação (Skin Cycling)",
-            en: "Advanced Skincare & Skin Cycling",
-            es: "Skincare Avanzado y Skin Cycling",
-            fr: "Skincare Avancé & Skin Cycling"
+        {
+            num: "02",
+            title: {
+                pt: "Química Cosmética, pH & Permeação",
+                en: "Cosmetic Chemistry, pH & Permeation",
+                es: "Química Cosmética, pH y Permeación",
+                fr: "Chimie Cosmétique, pH & Perméation"
+            },
+            content: {
+                pt: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">2.1 Biodisponibilidade e Lei de Fick</h3>
+                    <p>Para exercer atividade biológica, um ativo tópico deve atravessar o estrato córneo lipofílico. Segundo a <strong>Regra dos 500 Daltons</strong>, moléculas com peso molecular inferior a 500 Da e coeficiente de partição óleo/água equilibrado (LogP entre 1 e 3) apresentam permeação passiva superior.</p>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">2.2 Influência do pH e pKa nos Ácidos</h3>
+                    <p>A eficácia de alfa e beta-hidroxiácidos depende da fração ácida livre não ionizada, governada pela equação de Henderson-Hasselbalch. Quando o pH da fórmula aproxima-se do <strong>pKa do ácido</strong> (ex.: pKa 3,83 para o ácido glicólico), 50% das moléculas permanecem na forma neutra biodisponível.</p>
+                    <div class="p-4 rounded-xl bg-champagne-50 border-l-4 border-champagne-600 text-sm">
+                        <strong>Ordem Farmacotécnica de Camadas:</strong> Aplique sempre da menor para a maior viscosidade (soluções aquosas → séruns fluidos → géis → emulsões → óleos/oclusivos). Veículos oclusivos aplicados precocemente bloqueiam a difusão de ativos hidrossolúveis.
+                    </div>
+                `,
+                en: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">2.1 Bioavailability & Fick's Law</h3>
+                    <p>To exert biological activity, a topical ingredient must traverse the lipophilic stratum corneum. According to the <strong>500 Dalton Rule</strong>, molecules below 500 Da with a balanced oil/water partition coefficient (LogP 1–3) achieve optimal passive diffusion.</p>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">2.2 Influence of pH & pKa on Acids</h3>
+                    <p>The efficacy of AHAs and BHAs depends on the unionized free acid fraction governed by the Henderson-Hasselbalch equation. When formulation pH matches the acid's <strong>pKa</strong> (e.g., pKa 3.83 for glycolic acid), 50% of molecules remain in their bioavailable neutral state.</p>
+                    <div class="p-4 rounded-xl bg-champagne-50 border-l-4 border-champagne-600 text-sm">
+                        <strong>Galenic Layering Order:</strong> Always layer from lowest to highest viscosity (aqueous toners → fluid serums → gels → emulsions → oils/occlusives). Premature occlusives block water-soluble penetration.
+                    </div>
+                `,
+                es: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">2.1 Biodisponibilidad y Ley de Fick</h3>
+                    <p>Según la <strong>Regla de los 500 Daltons</strong>, las moléculas con peso molecular inferior a 500 Da y coeficiente de partición equilibrado logran una difusión pasiva óptima a través del estrato córneo.</p>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">2.2 Influencia del pH y pKa</h3>
+                    <p>La eficacia de los hidroxiácidos depende de la fracción ácida libre no ionizada. Cuando el pH de la fórmula iguala el <strong>pKa del ácido</strong>, el 50% de las moléculas permanecen biodisponibles.</p>
+                    <div class="p-4 rounded-xl bg-champagne-50 border-l-4 border-champagne-600 text-sm">
+                        <strong>Orden Galénico de Aplicación:</strong> Aplique siempre de menor a mayor viscosidad (tónicos acuosos → sueros fluidos → geles → emulsiones → aceites/oclusivos).
+                    </div>
+                `,
+                fr: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">2.1 Biodisponibilité et Loi de Fick</h3>
+                    <p>Selon la <strong>Règle des 500 Daltons</strong>, les molécules de poids moléculaire inférieur à 500 Da avec un coefficient de partage équilibré pénètrent efficacement la couche cornée.</p>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">2.2 Influence du pH et du pKa</h3>
+                    <p>L'efficacité des acides exfoliants dépend de la fraction acide libre non ionisée. Lorsque le pH de la formule égale le <strong>pKa de l'acide</strong>, 50% des molécules restent biodisponibles.</p>
+                    <div class="p-4 rounded-xl bg-champagne-50 border-l-4 border-champagne-600 text-sm">
+                        <strong>Ordre Galénique des Couches :</strong> Appliquez toujours de la texture la plus fluide à la plus riche (lotions aqueuses → sérums → gels → émulsions → huiles/occlusifs).
+                    </div>
+                `
+            }
         },
-        content: {
-            pt: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">3.1 Metodologia do Skin Cycling de 4 Noites</h3>
-                <p>O uso indiscriminado e simultâneo de múltiplos ácidos e retinoides compromete as junções oclusivas epidérmicas. O protocolo cíclico de 4 noites maximiza resultados clínicos preservando a integridade da barreira:</p>
-                <ul class="list-disc pl-6 space-y-2">
-                    <li><strong>Noite 1 (Esfoliação Química):</strong> Remoção controlada de corneócitos com AHAs ou BHAs para preparar a permeação celular.</li>
-                    <li><strong>Noite 2 (Estímulo Retinoide):</strong> Aplicação de retinol ou retinaldeído sobre pele completamente seca.</li>
-                    <li><strong>Noites 3 e 4 (Recuperação Lamelar):</strong> Suspensão de ativos queratolíticos; foco total em umectantes, ceramidas e peptídeos reparadores.</li>
-                </ul>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">3.2 Fotoproteção de Amplo Espectro e Luz Visível</h3>
-                <p>A radiação UVA longa (340–400 nm) e a luz azul-violeta de alta energia (400–450 nm) ativam o receptor <strong>Opsina-3</strong> nos melanócitos, induzindo pigmentação persistente em pacientes com melasma. Filtros solares com óxidos de ferro (com cor) são indispensáveis para bloquear esse espectro.</p>
-            `,
-            en: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">3.1 4-Night Skin Cycling Methodology</h3>
-                <p>Simultaneous overuse of exfoliating acids and retinoids disrupts epidermal tight junctions. A structured 4-night cycle maximizes dermal remodeling while safeguarding barrier homeostasis:</p>
-                <ul class="list-disc pl-6 space-y-2">
-                    <li><strong>Night 1 (Chemical Exfoliation):</strong> Controlled corneocyte desquamation via AHAs or BHAs to optimize subsequent absorption.</li>
-                    <li><strong>Night 2 (Retinoid Stimulation):</strong> Application of retinol or retinaldehyde onto completely dry skin.</li>
-                    <li><strong>Nights 3 & 4 (Lamellar Recovery):</strong> Pause keratolytic actives; focus exclusively on humectants, ceramides, and barrier peptides.</li>
-                </ul>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">3.2 Broad-Spectrum & Visible Light Photoprotection</h3>
-                <p>Long-wave UVA (340–400 nm) and high-energy visible blue light (400–450 nm) activate <strong>Opsin-3</strong> photoreceptors on melanocytes, triggering stubborn melasma relapses. Tinted sunscreens containing iron oxides provide essential physical shielding.</p>
-            `,
-            es: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">3.1 Metodología del Skin Cycling de 4 Noches</h3>
-                <ul class="list-disc pl-6 space-y-2">
-                    <li><strong>Noche 1 (Exfoliación Química):</strong> Renovación controlada con AHA o BHA.</li>
-                    <li><strong>Noche 2 (Estímulo Retinoide):</strong> Aplicación de retinol o retinaldehído sobre piel completamente seca.</li>
-                    <li><strong>Noches 3 y 4 (Recuperación Lamelar):</strong> Hidratación profunda con ceramidas, ácido hialurónico y pantenol.</li>
-                </ul>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">3.2 Fotoprotección contra Luz Visible</h3>
-                <p>La luz visible de alta energía activa el receptor <strong>Opsina-3</strong> en los melanocitos. Los protectores solares con óxidos de hierro (con color) son indispensables para prevenir recaídas de melasma.</p>
-            `,
-            fr: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">3.1 Méthodologie du Skin Cycling en 4 Nuits</h3>
-                <ul class="list-disc pl-6 space-y-2">
-                    <li><strong>Nuit 1 (Exfoliation Chimique) :</strong> Desquamation contrôlée par AHA ou BHA.</li>
-                    <li><strong>Nuit 2 (Stimulation Rétinoïde) :</strong> Application de rétinol ou rétinaldéhyde sur peau parfaitement sèche.</li>
-                    <li><strong>Nuits 3 et 4 (Récupération Lamellaire) :</strong> Pause des acides ; focus exclusif sur les céramides et peptides réparateurs.</li>
-                </ul>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">3.2 Photoprotection et Lumière Visible</h3>
-                <p>La lumière bleue active le récepteur <strong>Opsine-3</strong> des mélanocytes. Les écrans solaires teintés riches en oxydes de fer sont indispensables contre le mélasma.</p>
-            `
-        }
-    },
-    {
-        num: "04",
-        title: {
-            pt: "Tricologia & Arquitetura da Fibra Capilar",
-            en: "Trichology & Capillary Fiber Architecture",
-            es: "Tricología y Arquitectura de la Fibra Capilar",
-            fr: "Trichologie & Architecture de la Fibre Capillaire"
+        {
+            num: "03",
+            title: {
+                pt: "Skincare Avançado & Ciclo de Renovação (Skin Cycling)",
+                en: "Advanced Skincare & Skin Cycling",
+                es: "Skincare Avanzado y Skin Cycling",
+                fr: "Skincare Avancé & Skin Cycling"
+            },
+            content: {
+                pt: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">3.1 Metodologia do Skin Cycling de 4 Noites</h3>
+                    <p>O uso indiscriminado e simultâneo de múltiplos ácidos e retinoides compromete as junções oclusivas epidérmicas. O protocolo cíclico de 4 noites maximiza resultados clínicos preservando a integridade da barreira:</p>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Noite 1 (Esfoliação Química):</strong> Remoção controlada de corneócitos com AHAs ou BHAs para preparar a permeação celular.</li>
+                        <li><strong>Noite 2 (Estímulo Retinoide):</strong> Aplicação de retinol ou retinaldeído sobre pele completamente seca.</li>
+                        <li><strong>Noites 3 e 4 (Recuperação Lamelar):</strong> Suspensão de ativos queratolíticos; foco total em umectantes, ceramidas e peptídeos reparadores.</li>
+                    </ul>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">3.2 Fotoproteção de Amplo Espectro e Luz Visível</h3>
+                    <p>A radiação UVA longa (340–400 nm) e a luz azul-violeta de alta energia (400–450 nm) ativam o receptor <strong>Opsina-3</strong> nos melanócitos, induzindo pigmentação persistente em pacientes com melasma. Filtros solares com óxidos de ferro (com cor) são indispensáveis para bloquear esse espectro.</p>
+                `,
+                en: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">3.1 4-Night Skin Cycling Methodology</h3>
+                    <p>Simultaneous overuse of exfoliating acids and retinoids disrupts epidermal tight junctions. A structured 4-night cycle maximizes dermal remodeling while safeguarding barrier homeostasis:</p>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Night 1 (Chemical Exfoliation):</strong> Controlled corneocyte desquamation via AHAs or BHAs to optimize subsequent absorption.</li>
+                        <li><strong>Night 2 (Retinoid Stimulation):</strong> Application of retinol or retinaldehyde onto completely dry skin.</li>
+                        <li><strong>Nights 3 & 4 (Lamellar Recovery):</strong> Pause keratolytic actives; focus exclusively on humectants, ceramides, and barrier peptides.</li>
+                    </ul>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">3.2 Broad-Spectrum & Visible Light Photoprotection</h3>
+                    <p>Long-wave UVA (340–400 nm) and high-energy visible blue light (400–450 nm) activate <strong>Opsin-3</strong> photoreceptors on melanocytes, triggering stubborn melasma relapses. Tinted sunscreens containing iron oxides provide essential physical shielding.</p>
+                `,
+                es: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">3.1 Metodología del Skin Cycling de 4 Noches</h3>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Noche 1 (Exfoliación Química):</strong> Renovación controlada con AHA o BHA.</li>
+                        <li><strong>Noche 2 (Estímulo Retinoide):</strong> Aplicación de retinol o retinaldehído sobre piel completamente seca.</li>
+                        <li><strong>Noches 3 y 4 (Recuperación Lamelar):</strong> Hidratación profunda con ceramidas, ácido hialurónico y pantenol.</li>
+                    </ul>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">3.2 Fotoprotección contra Luz Visible</h3>
+                    <p>La luz visible de alta energía activa el receptor <strong>Opsina-3</strong> en los melanocitos. Los protectores solares con óxidos de hierro (con color) son indispensables para prevenir recaídas de melasma.</p>
+                `,
+                fr: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">3.1 Méthodologie du Skin Cycling en 4 Nuits</h3>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Nuit 1 (Exfoliation Chimique) :</strong> Desquamation contrôlée par AHA ou BHA.</li>
+                        <li><strong>Nuit 2 (Stimulation Rétinoïde) :</strong> Application de rétinol ou rétinaldéhyde sur peau parfaitement sèche.</li>
+                        <li><strong>Nuits 3 et 4 (Récupération Lamellaire) :</strong> Pause des acides ; focus exclusif sur les céramides et peptides réparateurs.</li>
+                    </ul>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">3.2 Photoprotection et Lumière Visible</h3>
+                    <p>La lumière bleue active le récepteur <strong>Opsine-3</strong> des mélanocytes. Les écrans solaires teintés riches en oxydes de fer sont indispensables contre le mélasma.</p>
+                `
+            }
         },
-        content: {
-            pt: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">4.1 Estrutura Molecular da Queratina e Ligações Químicas</h3>
-                <p>A haste capilar é constituída por α-queratina rica em cisteína. Sua integridade mecânica depende de três tipos de ligações transversais entre cadeias polipeptídicas:</p>
-                <ul class="list-disc pl-6 space-y-2">
-                    <li><strong>Ligações Dissulfeto (S–S):</strong> Ligações covalentes fortes responsáveis pela resistência e formato permanente do fio; rompidas apenas por processos oxidativos (descoloração) ou redutores (alisamentos).</li>
-                    <li><strong>Ligações de Hidrogênio:</strong> Interações fracas rompidas imediatamente ao molhar o cabelo e reestruturadas durante a secagem térmica.</li>
-                    <li><strong>Ligações Salinas (Iônicas):</strong> Dependem do ponto isoelétrico da queratina (pH ~3,67). Produtos alcalinos provocam intumescimento cuticular, enquanto acidificantes selam as escamas e restauram o brilho especular.</li>
-                </ul>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">4.2 Camada Lipídica F (18-MEA)</h3>
-                <p>A superfície externa da cutícula virgem é revestida pelo ácido 18-metil eicosanoico (18-MEA), que confere hidrofobicidade natural e reduz o atrito entre fios. Processos químicos removem o 18-MEA, exigindo reposição lipídica regular com óleos polares (coco, abacate) e ceramidas capilares.</p>
-            `,
-            en: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">4.1 Molecular Keratin & Chemical Bonds</h3>
-                <p>The hair shaft consists of cysteine-rich α-keratin stabilized by three cross-linking bonds between polypeptide chains:</p>
-                <ul class="list-disc pl-6 space-y-2">
-                    <li><strong>Disulfide Bonds (S–S):</strong> Strong covalent bonds governing tensile strength and curl pattern; cleaved only by bleaching or chemical relaxers/perms.</li>
-                    <li><strong>Hydrogen Bonds:</strong> Weak physical bonds broken by water and temporarily reset via thermal styling.</li>
-                    <li><strong>Salt (Ionic) Bonds:</strong> Governed by keratin's isoelectric point (pH ~3.67). Alkaline formulas swell cuticles, whereas acidic rinses seal scales and restore specular shine.</li>
-                </ul>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">4.2 The F-Layer (18-MEA)</h3>
-                <p>Virgin cuticles are covalently coated with 18-methyleicosanoic acid (18-MEA), imparting natural hydrophobicity and low inter-fiber friction. Chemical treatments strip this layer, requiring targeted lipid replenishment.</p>
-            `,
-            es: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">4.1 Estructura Molecular de la Queratina</h3>
-                <p>La fibra capilar está estabilizada por tres enlaces químicos: <strong>enlaces disulfuro</strong> (covalentes, rotos por decoloración/alisados), <strong>puentes de hidrógeno</strong> (sensibles al agua y calor) y <strong>enlaces salinos</strong> (sensibles al pH, sellados en pH ácido 3,5–4,5).</p>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">4.2 Capa Lipídica F (18-MEA)</h3>
-                <p>El ácido 18-metil eicosanoico recubre la cutícula virgen aportando hidrofobicidad natural. La reposición lipídica con aceites penetrantes restaura la lubricación cuticular.</p>
-            `,
-            fr: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">4.1 Structure Moléculaire de la Kératine</h3>
-                <p>La tige capillaire est stabilisée par trois liaisons : <strong>ponts disulfures</strong> (covalents), <strong>liaisons hydrogène</strong> (sensibles à l'eau et la chaleur) et <strong>liaisons salines</strong> (refermées par un pH acide de 3,5 à 4,5).</p>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">4.2 Couche Lipidique F (18-MEA)</h3>
-                <p>L'acide 18-méthyl éicosanoïque assure l'hydrophobie naturelle de la cuticule vierge. Les soins lipidiques compensent sa perte après coloration ou décoloration.</p>
-            `
-        }
-    },
-    {
-        num: "05",
-        title: {
-            pt: "Visagismo & Colorimetria das 12 Estações",
-            en: "Visagism & 12-Season Colorimetry",
-            es: "Visagismo y Colorimetría de las 12 Estaciones",
-            fr: "Visagisme & Colorimétrie des 12 Saisons"
+        {
+            num: "04",
+            title: {
+                pt: "Tricologia & Arquitetura da Fibra Capilar",
+                en: "Trichology & Capillary Fiber Architecture",
+                es: "Tricología y Arquitectura de la Fibra Capilar",
+                fr: "Trichologie & Architecture de la Fibre Capillaire"
+            },
+            content: {
+                pt: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">4.1 Estrutura Molecular da Queratina e Ligações Químicas</h3>
+                    <p>A haste capilar é constituída por α-queratina rica em cisteína. Sua integridade mecânica depende de três tipos de ligações transversais entre cadeias polipeptídicas:</p>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Ligações Dissulfeto (S–S):</strong> Ligações covalentes fortes responsáveis pela resistência e formato permanente do fio; rompidas apenas por processos oxidativos (descoloração) ou redutores (alisamentos).</li>
+                        <li><strong>Ligações de Hidrogênio:</strong> Interações fracas rompidas imediatamente ao molhar o cabelo e reestruturadas durante a secagem térmica.</li>
+                        <li><strong>Ligações Salinas (Iônicas):</strong> Dependem do ponto isoelétrico da queratina (pH ~3,67). Produtos alcalinos provocam intumescimento cuticular, enquanto acidificantes selam as escamas e restauram o brilho especular.</li>
+                    </ul>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">4.2 Camada Lipídica F (18-MEA)</h3>
+                    <p>A superfície externa da cutícula virgem é revestida pelo ácido 18-metil eicosanoico (18-MEA), que confere hidrofobicidade natural e reduz o atrito entre fios. Processos químicos removem o 18-MEA, exigindo reposição lipídica regular com óleos polares (coco, abacate) e ceramidas capilares.</p>
+                `,
+                en: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">4.1 Molecular Keratin & Chemical Bonds</h3>
+                    <p>The hair shaft consists of cysteine-rich α-keratin stabilized by three cross-linking bonds between polypeptide chains:</p>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Disulfide Bonds (S–S):</strong> Strong covalent bonds governing tensile strength and curl pattern; cleaved only by bleaching or chemical relaxers/perms.</li>
+                        <li><strong>Hydrogen Bonds:</strong> Weak physical bonds broken by water and temporarily reset via thermal styling.</li>
+                        <li><strong>Salt (Ionic) Bonds:</strong> Governed by keratin's isoelectric point (pH ~3.67). Alkaline formulas swell cuticles, whereas acidic rinses seal scales and restore specular shine.</li>
+                    </ul>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">4.2 The F-Layer (18-MEA)</h3>
+                    <p>Virgin cuticles are covalently coated with 18-methyleicosanoic acid (18-MEA), imparting natural hydrophobicity and low inter-fiber friction. Chemical treatments strip this layer, requiring targeted lipid replenishment.</p>
+                `,
+                es: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">4.1 Estructura Molecular de la Queratina</h3>
+                    <p>La fibra capilar está estabilizada por tres enlaces químicos: <strong>enlaces disulfuro</strong> (covalentes, rotos por decoloración/alisados), <strong>puentes de hidrógeno</strong> (sensibles al agua y calor) y <strong>enlaces salinos</strong> (sensibles al pH, sellados en pH ácido 3,5–4,5).</p>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">4.2 Capa Lipídica F (18-MEA)</h3>
+                    <p>El ácido 18-metil eicosanoico recubre la cutícula virgen aportando hidrofobicidad natural. La reposición lipídica con aceites penetrantes restaura la lubricación cuticular.</p>
+                `,
+                fr: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">4.1 Structure Moléculaire de la Kératine</h3>
+                    <p>La tige capillaire est stabilisée par trois liaisons : <strong>ponts disulfures</strong> (covalents), <strong>liaisons hydrogène</strong> (sensibles à l'eau et la chaleur) et <strong>liaisons salines</strong> (refermées par un pH acide de 3,5 à 4,5).</p>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">4.2 Couche Lipidique F (18-MEA)</h3>
+                    <p>L'acide 18-méthyl éicosanoïque assure l'hydrophobie naturelle de la cuticule vierge. Les soins lipidiques compensent sa perte après coloration ou décoloration.</p>
+                `
+            }
         },
-        content: {
-            pt: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">5.1 As Três Dimensões da Cor (Sistema Munsell)</h3>
-                <p>A análise cromática sazonal expandida classifica a harmonia pessoal segundo três parâmetros ópticos:</p>
-                <ul class="list-disc pl-6 space-y-2">
-                    <li><strong>Temperatura (Matiz):</strong> Predominância de pigmentos quentes (caroteno/dourado) ou frios (hemoglobina/azulado), além dos subtons neutros e oliva.</li>
-                    <li><strong>Profundidade (Valor):</strong> Grau de luminosidade global entre pele, íris e cabelos (Claro vs. Profundo).</li>
-                    <li><strong>Intensidade (Croma):</strong> Grau de saturação ou pureza da cor (Brilhante/Puro vs. Suave/Opaco).</li>
-                </ul>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">5.2 Óptica do Claro-Escuro na Arquitetura Facial</h3>
-                <p>Superfícies claras refletem luz e criam projeção anterior (volume), enquanto tonalidades acinzentadas/frias absorvem luz e simulam sombra anatômica natural, esculpindo contornos sem marcações artificiais.</p>
-            `,
-            en: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">5.1 Three Dimensions of Color (Munsell System)</h3>
-                <p>Expanded seasonal color analysis classifies personal harmony across three optical dimensions:</p>
-                <ul class="list-disc pl-6 space-y-2">
-                    <li><strong>Temperature (Hue):</strong> Predominance of warm (carotene/golden) versus cool (hemoglobin/bluish) undertones, including neutral and olive balances.</li>
-                    <li><strong>Depth (Value):</strong> Overall lightness or darkness across skin, iris, and hair (Light vs. Deep).</li>
-                    <li><strong>Intensity (Chroma):</strong> Color saturation or clarity (Bright/Clear vs. Soft/Muted).</li>
-                </ul>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">5.2 Chiaroscuro Optics in Facial Architecture</h3>
-                <p>Light-reflecting tones project volume forward, whereas cool-neutral shadow tones absorb light to mimic natural anatomical recesses without harsh lines.</p>
-            `,
-            es: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">5.1 Las Tres Dimensiones del Color (Sistema Munsell)</h3>
-                <p>La colorimetría estacional evalúa <strong>Temperatura</strong> (cálido vs. frío), <strong>Profundidad/Valor</strong> (claro vs. profundo) e <strong>Intensidad/Croma</strong> (brillante vs. suave) para armonizar maquillaje y cabello.</p>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">5.2 Óptica del Claroscuro Facial</h3>
-                <p>Los tonos claros proyectan volumen óptico, mientras que los contornos neutro-fríos imitan la sombra ósea natural para esculpir proporciones.</p>
-            `,
-            fr: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">5.1 Les Trois Dimensions de la Couleur (Système Munsell)</h3>
-                <p>La colorimétrie saisonnière évalue la <strong>Température</strong> (chaud vs froid), la <strong>Valeur</strong> (clair vs profond) et le <strong>Chroma</strong> (lumineux vs doux) pour sublimer le teint.</p>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">5.2 Optique du Clair-Obscur Facial</h3>
-                <p>Les nuances claires projettent les volumes, tandis que les ombres neutres-froides sculptent naturellement l'architecture osseuse du visage.</p>
-            `
-        }
-    },
-    {
-        num: "06",
-        title: {
-            pt: "Longevidade Estética, Epigenética & Cronobiologia",
-            en: "Aesthetic Longevity, Epigenetics & Chronobiology",
-            es: "Longevidad Estética, Epigenética y Cronobiología",
-            fr: "Longévité Esthétique, Épigénétique & Chronobiologie"
-        },
-        content: {
-            pt: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">6.1 Exposoma Cutâneo e Senescência Celular</h3>
-                <p>Cerca de 80% dos sinais visíveis do envelhecimento facial decorrem do <strong>exposoma</strong> (radiação UV, poluição particulada PM2.5, glicação e privação de sono). A glicação forma ligações cruzadas irreversíveis (AGEs) entre açúcares redutores e fibras de colágeno, tornando a derme rígida e amarelada.</p>
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">6.2 Ritmos Circadianos da Pele</h3>
-                <p>Os queratinócitos e fibroblastos possuem genes relógio (<em>CLOCK</em> e <em>BMAL1</em>). Durante o dia, a pele prioriza defesas antioxidantes e coesão de barreira; à noite (entre 23h e 03h), ocorre o pico de divisão celular mitótica, permeabilidade cutânea e reparo de DNA mediado pela melatonina.</p>
-            `,
-            en: `
-                <h3 class="font-serif text-2xl font-bold text-rosegold-700">6.1 Skin Exposome & Cellular Senescence</h3>
-                <p>Approximately 80% of visible facial aging stems from the <strong>exposome</strong> (UV radiation, PM2.5 particulate pollution, glycation, and sleep deprivation). Glycation creates irreversible cross-links (AGEs) between sugars and collagen fibers, causing dermal stiffness.</p>
-                <h3 class="font-serif text-2xl fo
+        {
+            num: "05",
+            title: {
+                pt: "Visagismo & Colorimetria das 12 Estações",
+                en: "Visagism & 12-Season Colorimetry",
+                es: "Visagismo y Colorimetría de las 12 Estaciones",
+                fr: "Visagisme & Colorimétrie des 12 Saisons"
+            },
+            content: {
+                pt: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">5.1 As Três Dimensões da Cor (Sistema Munsell)</h3>
+                    <p>A análise cromática sazonal expandida classifica a harmonia pessoal segundo três parâmetros ópticos:</p>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Temperatura (Matiz):</strong> Predominância de pigmentos quentes (caroteno/dourado) ou frios (hemoglobina/azulado), além dos subtons neutros e oliva.</li>
+                        <li><strong>Profundidade (Valor):</strong> Grau de luminosidade global entre pele, íris e cabelos (Claro vs. Profundo).</li>
+                        <li><strong>Intensidade (Croma):</strong> Grau de saturação ou pureza da cor (Brilhante/Puro vs. Suave/Opaco).</li>
+                    </ul>
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">5.2 Óptica do Claro-Escuro na Arquitetura Facial</h3>
+                    <p>Superfícies claras refletem luz e criam projeção anterior (volume), enquanto tonalidades acinzentadas/frias absorvem luz e simulam sombra anatômica natural, esculpindo contornos sem marcações artificiais.</p>
+                `,
+                en: `
+                    <h3 class="font-serif text-2xl font-bold text-sage-700">5.1 Three Dimensions of Color (Munsell System)</h3>
+                    <p>Expanded seasonal color analysis classifies pe
